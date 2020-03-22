@@ -60,8 +60,6 @@ public class UsrUsuario implements Serializable {
     @Size(max = 20)
     @Column(name = "rol")
     private String rol;
-    @OneToMany(mappedBy = "idProfesor")
-    private List<Curso> cursoList;
     @OneToMany(mappedBy = "idEstudiante")
     private List<NotaActividad> notaActividadList;
     @OneToMany(mappedBy = "idEstudiante")

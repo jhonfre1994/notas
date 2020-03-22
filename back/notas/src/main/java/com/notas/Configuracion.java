@@ -1,4 +1,4 @@
-package com.authentication;
+package com.notas;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;

@@ -1,0 +1,26 @@
+<div class="login">
+    <p-card [style]="{width: '400px'}">
+        <div style="text-align: center;">
+            <img src="Card" src="assets/login/login.png">
+        </div>
+        <br><br>
+        <div>
+            <span class="ui-float-label">
+                <input id="float-input" type="text" size="30" pInputText [(ngModel)]="loginAccess.username">
+                <label for="float-input">Nombre usuario</label>
+            </span>
+        </div>
+
+        <div style="padding-top: 25px;">
+            <span class="ui-float-label">
+                <input id="float-input" type="password" size="30" pInputText [(ngModel)]="loginAccess.password">
+                <label for="float-input">Contraseña</label>
+            </span>
+        </div>
+
+        <div style="text-align: center; padding-top: 20px;">
+            <button pButton type="button" label="Inicias Sesión" (click)="login()"></button>
+        </div>
+        <p-messages [(value)]="msgs"></p-messages>
+    </p-card>
+</div>

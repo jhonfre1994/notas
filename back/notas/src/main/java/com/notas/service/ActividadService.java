@@ -5,10 +5,21 @@
  */
 package com.notas.service;
 
+import com.notas.dto.ActividadDTO;
+import java.util.List;
+
 /**
  *
  * @author UTP
  */
 public interface ActividadService {
-    
+
+    ActividadDTO consultarActividad(Integer id);
+
+    ActividadDTO crearActividad(ActividadDTO actividad);
+
+    ActividadDTO eliminarActividad(Integer id);
+
+    List<ActividadDTO> actividadesCurso(Integer idCurso);
+
 }

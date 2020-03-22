@@ -6,9 +6,15 @@
 package com.notas.service.impl;
 
 import com.notas.dto.UsrUsuarioDTO;
+import com.notas.dto.login;
 import com.notas.entidades.UsrUsuario;
+import com.notas.exceptions.responses.NoContentException;
+import com.notas.exceptions.responses.NotFoundException;
 import com.notas.repositorios.UsrUsuarioRepository;
 import com.notas.service.UsrUsuarioService;
+import com.notas.web.UsuariosController;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +71,30 @@ public class UsrUsuarioServiceimpl implements UsrUsuarioService {
             return usu;
         }
         return null;
+    }
+
+    @Override
+    public UsrUsuarioDTO iniciarSesion(login login) {
+
+        UsrUsuario usu = usuarioRepository.findByNombreUsuarioAndContrasena(login.getUsername(), login.getPassword());
+
+        if (usu != null) {
+            return mapper.map(usu, UsrUsuarioDTO.class);
+        }
+        throw new NotFoundException("Usuario y/o contraseña incorrectos");
+    }
+
+    @Override
+    public List<UsrUsuarioDTO> listarTodos() {
+        List<UsrUsuario> usus = usuarioRepository.findAll();
+        List<UsrUsuarioDTO> res = new ArrayList<>();
+        if (!usus.isEmpty()) {
+            for (UsrUsuario usu : usus) {
+                res.add(mapper.map(usu, UsrUsuarioDTO.class));
+            }
+            return res;
+        }
+        throw new NoContentException("No existen usuarios en la base de datos");
     }
 
 }

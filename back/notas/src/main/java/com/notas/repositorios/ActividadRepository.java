@@ -6,7 +6,10 @@
 package com.notas.repositorios;
 
 import com.notas.entidades.Actividad;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -14,6 +17,11 @@ import org.springframework.stereotype.Repository;
  * @author UTP
  */
 @Repository
-public interface ActividadRepository extends JpaRepository<Actividad, Integer>{
-    
+public interface ActividadRepository extends JpaRepository<Actividad, Integer> {
+
+    @Query(value = "select *\n"
+            + "from actividad a\n"
+            + "where a.id_curso = :id", nativeQuery = true)
+    List<Actividad> actividadesPorCurso(@Param("id") Integer id);
+
 }

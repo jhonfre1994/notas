@@ -1,0 +1,26 @@
+<p-sidebar [(visible)]="display">
+    <p-card [style]="{width: '250px'}" styleClass="ui-card-shadow">
+        <h3>Usuario en sesión</h3>
+        <h3>{{nombreUsuario}}</h3>
+    </p-card>
+    <p-panelMenu [model]="items" [style]="{'width':'250px'}"></p-panelMenu>
+
+    <div style="margin-top: 20px;">
+        <button pButton type="button" label="Cerrar sesión" (click)="cerrarSesion()" class="ui-button-danger"
+            icon="pi pi-sign-out" style="margin-right: .25em; width: 250px;"></button>
+    </div>
+</p-sidebar>
+
+<p-toolbar>
+    <div class="ui-toolbar-group-left">
+        <button pButton type="button" style="width: 150px;" (click)="display = true" label="Menú"
+            icon="pi pi-id-card"></button>
+        <!-- <i class="pi pi-angle-right"></i> -->
+        <!-- <button pButton type="button" label="Imprimir" icon="pi pi-print" (click)="prueba($event)"
+            class="ui-button-success"></button> -->
+    </div>
+</p-toolbar>
+
+
+
+<router-outlet></router-outlet>

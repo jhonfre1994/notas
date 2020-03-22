@@ -1,0 +1,95 @@
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<div style="padding: 25px;">
+    <button pButton type="button" label="Crear Usuario" (click)="showDialog()"></button>
+</div>
+
+
+<div>
+    <p-table [value]="usuariosList">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Nombres</th>
+                <th>Apellidos</th>
+                <th>Nombre usuario</th>
+                <th>Correo</th>
+                <th>Rol</th>
+                <th>Acciones</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-car>
+            <tr>
+                <td (click)="editar(car)">{{car.nombres}}</td>
+                <td (click)="editar(car)">{{car.apellidos}}</td>
+                <td (click)="editar(car)">{{car.nombreUsuario}}</td>
+                <td (click)="editar(car)">{{car.correo}}</td>
+                <td (click)="editar(car)">{{car.rol}}</td>
+                <td style="text-align: center;">
+                    <button pButton type="button" icon="pi pi-trash" class="ui-button-danger"
+                    (click)="confirmar(car)"></button>
+                </td>
+
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+
+<p-dialog header="Crear usuario" [(visible)]="display" [modal]="true" [style]="{width: '400px'}" [baseZIndex]="10000"
+    [draggable]="false" [resizable]="false">
+    <p-toast class="toast"></p-toast>
+    <div class="p-grid">
+        <div class="p-col">
+            <span class="ui-float-label">
+                <input id="float-input" type="text" size="30" pInputText [(ngModel)]="guardarUsuario.nombres">
+                <label for="float-input">Nombres</label>
+            </span>
+        </div>
+        <div class="p-col">
+            <span class="ui-float-label">
+                <input id="float-input" type="text" size="30" pInputText [(ngModel)]="guardarUsuario.apellidos">
+                <label for="float-input">Apellidos</label>
+            </span>
+        </div>
+        <div class="p-col">
+            <span class="ui-float-label">
+                <input id="float-input" type="text" size="30" pInputText [(ngModel)]="guardarUsuario.nombreUsuario">
+                <label for="float-input">Nombre usuarios</label>
+            </span>
+        </div>
+        <div class="p-col">
+            <span class="ui-float-label">
+                <input id="float-input" type="text" size="30" pInputText [(ngModel)]="guardarUsuario.contrasena">
+                <label for="float-input">Contraseña</label>
+            </span>
+        </div>
+
+        <div class="p-col">
+            <span class="ui-float-label">
+                <input id="float-input" type="text" size="30" pInputText [(ngModel)]="guardarUsuario.correo">
+                <label for="float-input">Correo</label>
+            </span>
+        </div>
+
+        <div class="p-col">
+            <span class="ui-float-label">
+                <p-dropdown [options]="generos" [(ngModel)]="selectGenero" optionLabel="genero" placeholder=" ">
+                </p-dropdown>
+                <label for="float-input">Genero</label>
+            </span>
+        </div>
+
+        <div class="p-col">
+            <span class="ui-float-label">
+                <p-dropdown [options]="roles" [(ngModel)]="selectRol" optionLabel="genero" placeholder=" "></p-dropdown>
+                <label for="float-input">Rol</label>
+            </span>
+        </div>
+
+    </div>
+    <p-footer>
+        <div style="text-align: center;">
+            <button pButton type="button" label="Guardar" class="ui-button-success" (click)="guardar()"></button>
+            <button pButton type="button" label="Cancelar" class="ui-button-danger" (click)="display=false"></button>
+        </div>
+    </p-footer>
+</p-dialog>

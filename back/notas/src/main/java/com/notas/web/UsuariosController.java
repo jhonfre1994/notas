@@ -6,9 +6,13 @@
 package com.notas.web;
 
 import com.notas.dto.UsrUsuarioDTO;
+import com.notas.dto.login;
 import com.notas.service.UsrUsuarioService;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/api/v.1/usuarios")
+@CrossOrigin(origins = "*")
 public class UsuariosController {
 
     @Autowired
@@ -30,6 +35,12 @@ public class UsuariosController {
 
     public UsuariosController(UsrUsuarioService usuarioService) {
         this.usuarioService = usuarioService;
+    }
+
+    @GetMapping()
+    public ResponseEntity<?> listarTodos() {
+        List<UsrUsuarioDTO> res = usuarioService.listarTodos();
+        return ResponseEntity.ok(res);
     }
 
     @GetMapping("consularPorUsuario/{nombreUsuario}")
@@ -69,7 +80,12 @@ public class UsuariosController {
         }
         return ResponseEntity.notFound().build();
     }
-    
-    
-    
+
+    @PostMapping("login")
+    public ResponseEntity<?> inisiarSesion(@RequestBody login login) {
+        UsrUsuarioDTO res = usuarioService.iniciarSesion(login);
+
+        return ResponseEntity.ok(res);
+    }
+
 }

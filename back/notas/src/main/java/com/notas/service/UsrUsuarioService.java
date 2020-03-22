@@ -6,6 +6,8 @@
 package com.notas.service;
 
 import com.notas.dto.UsrUsuarioDTO;
+import com.notas.dto.login;
+import java.util.List;
 
 /**
  *
@@ -18,7 +20,11 @@ public interface UsrUsuarioService {
     UsrUsuarioDTO consultarUsuario(Integer id);
 
     UsrUsuarioDTO consultarNombreUsuario(String usuario);
-    
+
     UsrUsuarioDTO eliminarUsuario(Integer id);
+
+    UsrUsuarioDTO iniciarSesion(login login);
+    
+    List<UsrUsuarioDTO> listarTodos();
 
 }

@@ -41,10 +41,12 @@ export class MenuComponent implements OnInit, AfterViewInit {
           {
             label: 'Usuarios', icon: 'pi pi-users',
             command: (event) => {
+              this.enviarUsuarios()
             }
           }, {
             label: 'Cursos', icon: 'pi pi-user-plus',
             command: (event) => {
+              this.enviarCursos()
             },
           }, {
             label: 'Actividades', icon: 'pi pi-user-plus',
@@ -64,9 +66,12 @@ export class MenuComponent implements OnInit, AfterViewInit {
      this.router.navigate(['usuarios'])
    }
 
+   enviarCursos() {
+    this.router.navigate(['cursos'])
+  }
+
    cerrarSesion(){
     this.router.navigate(['login'])
-
    }
  
 }

@@ -43,14 +43,14 @@ export class UsuariosComponent implements OnInit {
     this.listarTodos()
   }
 
-  confirmar(usuario: usuarioDTO) {
-    this.confirmationService.confirm({
-      message: 'Are you sure that you want to perform this action?',
-      accept: () => {
-        this.eliminarUsuario(usuario)
-      }
-    });
-  }
+    confirmar(usuario: usuarioDTO) {
+      this.confirmationService.confirm({
+        message: 'Esta seguro que desea eliminar el usuario?',
+        accept: () => {
+          this.eliminarUsuario(usuario)
+        }
+      });
+    }
 
   listarTodos() {
     this.usuariosService.listarUsuarios().subscribe(res => {

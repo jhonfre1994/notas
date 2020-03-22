@@ -9,4 +9,5 @@ export class usuarioDTO{
     public contrasena: string;
     public genero : string;
     public rol : string;
+    public nombreCompleto: string;
 }

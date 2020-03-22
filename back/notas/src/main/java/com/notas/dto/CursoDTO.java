@@ -23,6 +23,7 @@ public class CursoDTO {
     private String nombreCurso;
     private String codigo;
     private UsrUsuarioDTO idProfesor;
+    private String responsable;
 //    private List<CursoEstudianteDTO> cursoEstudianteList;
 //    private List<ActividadDTO> actividadList;
 }

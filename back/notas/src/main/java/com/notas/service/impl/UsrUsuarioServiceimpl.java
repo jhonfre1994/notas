@@ -90,7 +90,10 @@ public class UsrUsuarioServiceimpl implements UsrUsuarioService {
         List<UsrUsuarioDTO> res = new ArrayList<>();
         if (!usus.isEmpty()) {
             for (UsrUsuario usu : usus) {
-                res.add(mapper.map(usu, UsrUsuarioDTO.class));
+                UsrUsuarioDTO item;
+                item = mapper.map(usu, UsrUsuarioDTO.class);
+                item.setNombreCompleto(item.getNombres() + " " + item.getApellidos());
+                res.add(item);
             }
             return res;
         }

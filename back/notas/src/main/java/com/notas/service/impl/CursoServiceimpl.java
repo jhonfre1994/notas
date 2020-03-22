@@ -70,7 +70,10 @@ public class CursoServiceimpl implements CursoService {
         List<CursoDTO> res = new ArrayList<CursoDTO>();
         if (!listCursos.isEmpty()) {
             for (Curso listCurso : listCursos) {
-                res.add(mapper.map(listCurso, CursoDTO.class));
+                CursoDTO item;
+                item = mapper.map(listCurso, CursoDTO.class);
+                item.setResponsable(item.getIdProfesor().getNombres() + " " +item.getIdProfesor().getApellidos());
+                res.add(item);
             }
             return res;
         }

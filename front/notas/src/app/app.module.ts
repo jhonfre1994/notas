@@ -9,13 +9,15 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { MenuComponent } from './menu/menu.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
+import { CursosComponent } from './cursos/cursos.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     MenuComponent,
-    UsuariosComponent
+    UsuariosComponent,
+    CursosComponent
   ],
   imports: [
     BrowserModule,

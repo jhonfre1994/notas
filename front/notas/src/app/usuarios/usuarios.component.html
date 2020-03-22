@@ -1,4 +1,4 @@
-<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<p-confirmDialog header="Confirmación" icon="pi pi-exclamation-triangle"></p-confirmDialog>
 <div style="padding: 25px;">
     <button pButton type="button" label="Crear Usuario" (click)="showDialog()"></button>
 </div>
@@ -72,7 +72,7 @@
 
         <div class="p-col">
             <span class="ui-float-label">
-                <p-dropdown [options]="generos" [(ngModel)]="selectGenero" optionLabel="genero" placeholder=" ">
+                <p-dropdown [style]="{width: '100%'}" [options]="generos" [(ngModel)]="selectGenero" optionLabel="genero" placeholder=" ">
                 </p-dropdown>
                 <label for="float-input">Genero</label>
             </span>
@@ -80,7 +80,7 @@
 
         <div class="p-col">
             <span class="ui-float-label">
-                <p-dropdown [options]="roles" [(ngModel)]="selectRol" optionLabel="genero" placeholder=" "></p-dropdown>
+                <p-dropdown [style]="{width: '100%'}" [options]="roles" [(ngModel)]="selectRol" optionLabel="genero" placeholder=" "></p-dropdown>
                 <label for="float-input">Rol</label>
             </span>
         </div>

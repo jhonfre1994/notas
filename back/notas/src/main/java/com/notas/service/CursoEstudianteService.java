@@ -6,6 +6,7 @@
 package com.notas.service;
 
 import com.notas.dto.CursoEstudianteDTO;
+import com.notas.dto.SaveCursoEstudianteDTO;
 import com.notas.dto.UsrUsuarioDTO;
 import java.util.List;
 
@@ -15,7 +16,7 @@ import java.util.List;
  */
 public interface CursoEstudianteService {
 
-    CursoEstudianteDTO guardarCursoEstudiante(CursoEstudianteDTO cursoUsr);
+    List<UsrUsuarioDTO> guardarCursoEstudiante(SaveCursoEstudianteDTO cursoUsr);
 
     List<UsrUsuarioDTO> listaPorCurso(Integer id);
     

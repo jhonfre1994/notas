@@ -48,9 +48,17 @@ export class MenuComponent implements OnInit, AfterViewInit {
             command: (event) => {
               this.enviarCursos()
             },
-          }, {
+          },
+          {
+            label: 'Asignar estudiantes', icon: 'pi pi-user-plus',
+            command: (event) => {
+              this.enviarCursoEstudiantes()
+            },
+          },
+          {
             label: 'Actividades', icon: 'pi pi-user-plus',
             command: (event) => {
+              this.enviarActividades()
             },
           }
 
@@ -62,16 +70,24 @@ export class MenuComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
   }
 
-   enviarUsuarios() {
-     this.router.navigate(['usuarios'])
-   }
+  enviarUsuarios() {
+    this.router.navigate(['usuarios'])
+  }
 
-   enviarCursos() {
+  enviarCursos() {
     this.router.navigate(['cursos'])
   }
 
-   cerrarSesion(){
+  enviarCursoEstudiantes() {
+    this.router.navigate(['cursoEstudiante'])
+  }
+
+  cerrarSesion() {
     this.router.navigate(['login'])
-   }
- 
+  }
+
+
+  enviarActividades() {
+    this.router.navigate(['actividades'])
+  }
 }

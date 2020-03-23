@@ -6,8 +6,11 @@
 package com.notas.service.impl;
 
 import com.notas.dto.CursoEstudianteDTO;
+import com.notas.dto.SaveCursoEstudianteDTO;
 import com.notas.dto.UsrUsuarioDTO;
+import com.notas.entidades.Curso;
 import com.notas.entidades.CursoEstudiante;
+import com.notas.entidades.UsrUsuario;
 import com.notas.exceptions.responses.BadRequestException;
 import com.notas.exceptions.responses.NoContentException;
 import com.notas.repositorios.CursoEstudianteRepository;
@@ -32,17 +35,18 @@ public class CursoEstudianteServiceimpl implements CursoEstudianteService {
     private ModelMapper mapper;
 
     @Override
-    public CursoEstudianteDTO guardarCursoEstudiante(CursoEstudianteDTO cursoUsr) {
-
-        CursoEstudianteDTO exist = consultarEstudianteCurso(cursoUsr.getIdCurso().getIdCurso(),
-                cursoUsr.getIdEstudiante().getIdUsuario());
-
-        CursoEstudiante res;
-        if (exist == null) {
-            res = cursoEstudianteRepository.save(mapper.map(cursoUsr, CursoEstudiante.class));
-            return mapper.map(res, CursoEstudianteDTO.class);
+    public List<UsrUsuarioDTO> guardarCursoEstudiante(SaveCursoEstudianteDTO cursoUsr) {
+        for (UsrUsuarioDTO estudiante : cursoUsr.getEstudiantes()) {
+            CursoEstudianteDTO exist = consultarEstudianteCurso(cursoUsr.getCurso().getIdCurso(),
+                    estudiante.getIdUsuario());
+            if (exist == null) {
+                CursoEstudiante res = new CursoEstudiante();
+                res.setIdCurso(mapper.map(cursoUsr.getCurso(), Curso.class));
+                res.setIdEstudiante(mapper.map(estudiante, UsrUsuario.class));
+                res = cursoEstudianteRepository.save(res);
+            }
         }
-        throw new BadRequestException("El estudiante ya se encuentra asignado a este curso");
+        return cursoUsr.getEstudiantes();
     }
 
     public CursoEstudianteDTO consultarEstudianteCurso(Integer idCurso, Integer idEstudiante) {
@@ -64,7 +68,7 @@ public class CursoEstudianteServiceimpl implements CursoEstudianteService {
             }
             return res;
         }
-        throw new NoContentException("No hay estuduantes en este grupo");
+        throw new BadRequestException("No hay estudiantes en este grupo");
 
     }
 

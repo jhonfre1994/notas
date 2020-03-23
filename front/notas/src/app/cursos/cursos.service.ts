@@ -15,16 +15,20 @@ export class CursosService {
     headers: new HttpHeaders()
       .set('Content-Type', 'application/json')
   }
-  
+
   public listarCursos(): Observable<CursosDTO[]> {
     return this.http.get<CursosDTO[]>(environment.gatewayServer + "api/v.1/cursos")
   }
 
-  public gurdarCurso(curso: CursosDTO):Observable<CursosDTO>{
-    return this.http.post<CursosDTO>(environment.gatewayServer +"api/v.1/cursos/guardarCruso", curso, this.header )
+  public listarCursosPorfesor(idProfesor: number): Observable<CursosDTO[]> {
+    return this.http.get<CursosDTO[]>(environment.gatewayServer + "api/v.1/cursos/listarCursosProfesor/" + idProfesor)
   }
 
-  public eliminarCurso(curso: number):Observable<CursosDTO>{
-    return this.http.delete<CursosDTO>(environment.gatewayServer +"api/v.1/cursos/eliminarCurso/" + curso)
+  public gurdarCurso(curso: CursosDTO): Observable<CursosDTO> {
+    return this.http.post<CursosDTO>(environment.gatewayServer + "api/v.1/cursos/guardarCruso", curso, this.header)
+  }
+
+  public eliminarCurso(curso: number): Observable<CursosDTO> {
+    return this.http.delete<CursosDTO>(environment.gatewayServer + "api/v.1/cursos/eliminarCurso/" + curso)
   }
 }

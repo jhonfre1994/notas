@@ -6,6 +6,7 @@
 package com.notas.web;
 
 import com.notas.dto.CursoEstudianteDTO;
+import com.notas.dto.SaveCursoEstudianteDTO;
 import com.notas.dto.UsrUsuarioDTO;
 import com.notas.service.CursoEstudianteService;
 import java.util.List;
@@ -69,8 +70,8 @@ public class CursoEstudiantesController {
     }
 
     @PostMapping("guardarEstudianteCurso")
-    public ResponseEntity<?> guardarEstudianteCurso(@RequestBody CursoEstudianteDTO obj) {
-        CursoEstudianteDTO res = estudianteService.guardarCursoEstudiante(obj);
+    public ResponseEntity<?> guardarEstudianteCurso(@RequestBody SaveCursoEstudianteDTO obj) {
+        List<UsrUsuarioDTO> res = estudianteService.guardarCursoEstudiante(obj);
 
         if (res != null) {
             return ResponseEntity.ok(res);

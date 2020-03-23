@@ -6,7 +6,9 @@
 package com.notas.service.impl;
 
 import com.notas.dto.CursoDTO;
+import com.notas.dto.UsrUsuarioDTO;
 import com.notas.entidades.Curso;
+import com.notas.entidades.UsrUsuario;
 import com.notas.exceptions.responses.BadRequestException;
 import com.notas.repositorios.CursoRepository;
 import com.notas.service.CursoService;
@@ -29,6 +31,9 @@ public class CursoServiceimpl implements CursoService {
 
     @Autowired
     private ModelMapper mapper;
+
+    @Autowired
+    private UsrUsuarioServiceimpl usrUsuarioServiceimpl;
 
     @Override
     public CursoDTO consultarCurso(Integer id) {
@@ -72,12 +77,32 @@ public class CursoServiceimpl implements CursoService {
             for (Curso listCurso : listCursos) {
                 CursoDTO item;
                 item = mapper.map(listCurso, CursoDTO.class);
-                item.setResponsable(item.getIdProfesor().getNombres() + " " +item.getIdProfesor().getApellidos());
+                item.setResponsable(item.getIdProfesor().getNombres() + " " + item.getIdProfesor().getApellidos());
                 res.add(item);
             }
             return res;
         }
         return null;
+    }
+
+    @Override
+    public List<CursoDTO> listarMisCursos(Integer idProfesor) {
+
+        UsrUsuarioDTO usr = usrUsuarioServiceimpl.consultarUsuario(idProfesor);
+        if (usr != null) {
+            List<Curso> listCursos = cursoRepository.findByIdProfesor(mapper.map(usr, UsrUsuario.class));
+            List<CursoDTO> res = new ArrayList<CursoDTO>();
+            if (!listCursos.isEmpty()) {
+                for (Curso listCurso : listCursos) {
+                    CursoDTO item;
+                    item = mapper.map(listCurso, CursoDTO.class);
+                    item.setResponsable(item.getIdProfesor().getNombres() + " " + item.getIdProfesor().getApellidos());
+                    res.add(item);
+                }
+                return res;
+            }
+        }
+        throw new BadRequestException("No se encuentra en profesor en la base de datos");
     }
 
 }

@@ -45,6 +45,15 @@ public class CursoController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("listarCursosProfesor/{idProfesor}")
+    public ResponseEntity<?> listarCursosProfesor(@PathVariable("idProfesor") Integer idProfesor) {
+        List<CursoDTO> res = cursoService.listarMisCursos(idProfesor);
+        if (res != null) {
+            return ResponseEntity.ok(res);
+        }
+        return ResponseEntity.noContent().build();
+    }
+
     @PostMapping("guardarCruso")
     public ResponseEntity<?> guardarCruso(@RequestBody CursoDTO curso) {
         CursoDTO res = cursoService.guardarCruso(curso);
@@ -54,8 +63,7 @@ public class CursoController {
         }
         return ResponseEntity.noContent().build();
     }
-    
-    
+
     @DeleteMapping("eliminarCurso/{id}")
     public ResponseEntity<?> eliminarCurso(@PathVariable("id") Integer id) {
         CursoDTO res = cursoService.eliminarCrusto(id);

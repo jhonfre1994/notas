@@ -42,6 +42,12 @@ public class UsuariosController {
         List<UsrUsuarioDTO> res = usuarioService.listarTodos();
         return ResponseEntity.ok(res);
     }
+    
+    @GetMapping("listarEstudiantes")
+    public ResponseEntity<?> listarEstudiantes() {
+        List<UsrUsuarioDTO> res = usuarioService.listarEstudiantes();
+        return ResponseEntity.ok(res);
+    }
 
     @GetMapping("consularPorUsuario/{nombreUsuario}")
     public ResponseEntity<?> consultaPorUsuario(@PathVariable("nombreUsuario") String nombreUsuario) {

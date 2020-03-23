@@ -22,4 +22,5 @@ public interface CursoService {
     
     List<CursoDTO> listarCursos();
     
+    List<CursoDTO> listarMisCursos(Integer idProfesor);
 }

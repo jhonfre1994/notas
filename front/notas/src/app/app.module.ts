@@ -10,6 +10,8 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { MenuComponent } from './menu/menu.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { CursosComponent } from './cursos/cursos.component';
+import { CursoEstudianteComponent } from './curso-estudiante/curso-estudiante.component';
+import { ActividadesComponent } from './actividades/actividades.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,9 @@ import { CursosComponent } from './cursos/cursos.component';
     LoginComponent,
     MenuComponent,
     UsuariosComponent,
-    CursosComponent
+    CursosComponent, 
+    CursoEstudianteComponent,
+    ActividadesComponent
   ],
   imports: [
     BrowserModule,

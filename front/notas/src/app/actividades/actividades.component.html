@@ -7,35 +7,36 @@
                 optionLabel="nombreCurso" placeholder="Cursos" (onChange)="dropDownCurso($event)"></p-dropdown>
         </div>
         <div class="ui-g-12 ui-md-6 ui-lg-4">
-            <p-multiSelect [style]="{width: '100%'}" [options]="usuariosList" [(ngModel)]="usuariosSelected"
-                optionLabel="nombreCompleto" [defaultLabel]="'Estudiantes'"></p-multiSelect>
+            <span class="ui-float-label">
+                <input id="float-input" type="text" size="30" pInputText [(ngModel)]="guardarActividad.nombreActividad">
+                <label for="float-input">Nombre Actividad</label>
+            </span>
         </div>
         <div class="ui-g-12 ui-md-6 ui-lg-4">
-            <button style="width: 100%;" icon="pi pi-save" pButton type="button"
-                label="Asignar estudiantes" class="ui-button-success" (click)="guardar()"></button>
+            <button style="width: 100%;" icon="pi pi-save" pButton type="button" label="Agregar Actividad"
+                class="ui-button-success" (click)="guardar()"></button>
         </div>
     </div>
 </p-fieldset>
 
 
-
 <div style="padding-top: 25px;">
-    <p-table [value]="estudiantesCurso">
+    <p-table [value]="actividadesList">
         <ng-template pTemplate="header">
             <tr>
-                <th>Nombres</th>
-                <th>Apellidos</th>
+                <th>Nombre Actividad</th>
+                <!-- <th>Apellidos</th>
                 <th>Nombre usuario</th>
-                <th>Correo</th>
-                <th>Acciones</th>
+                <th>Correo</th>-->
+                <th>Acciones</th> 
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-car>
             <tr>
-                <td>{{car.nombres}}</td>
-                <td>{{car.apellidos}}</td>
+                <td (click)="editar(car)">{{car.nombreActividad}}</td>
+                <!-- <td>{{car.apellidos}}</td>
                 <td>{{car.nombreUsuario}}</td>
-                <td>{{car.correo}}</td>
+                <td>{{car.correo}}</td> -->
                 <td style="text-align: center;">
                     <button pButton type="button" icon="pi pi-trash" class="ui-button-danger"
                         (click)="confirmar(car)"></button>

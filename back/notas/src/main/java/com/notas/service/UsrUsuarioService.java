@@ -24,7 +24,9 @@ public interface UsrUsuarioService {
     UsrUsuarioDTO eliminarUsuario(Integer id);
 
     UsrUsuarioDTO iniciarSesion(login login);
-    
+
     List<UsrUsuarioDTO> listarTodos();
+
+    List<UsrUsuarioDTO> listarEstudiantes();
 
 }

@@ -42,7 +42,7 @@ CREATE TABLE nota_actividad (
     id_nota serial,
     id_actividad int,
     id_estudiante int,
-    nota int,
+    nota NUMERIC (3, 2),
     fecha_digitacion date,
     constraint fk_actividad foreign key (id_actividad) references actividad(id_actividad) on delete cascade on update cascade,
     constraint fk_estudiante_nota foreign key (id_estudiante) references USR_USUARIO(id_usuario) on delete cascade on update cascade,

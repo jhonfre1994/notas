@@ -29,6 +29,7 @@ export class MenuComponent implements OnInit, AfterViewInit {
           {
             label: 'Registrar notas', icon: 'pi pi-fw pi-chart-line',
             command: (event) => {
+              this.enviarRegistrarNotas()
             }
           }
         ]
@@ -89,5 +90,9 @@ export class MenuComponent implements OnInit, AfterViewInit {
 
   enviarActividades() {
     this.router.navigate(['actividades'])
+  }
+
+  enviarRegistrarNotas() {
+    this.router.navigate(['registrarNotas'])
   }
 }

@@ -18,7 +18,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.xml.bind.annotation.XmlRootElement;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,7 +31,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "nota_actividad")
-@XmlRootElement
 public class NotaActividad implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -42,7 +40,7 @@ public class NotaActividad implements Serializable {
     @Column(name = "id_nota")
     private Integer idNota;
     @Column(name = "nota")
-    private Integer nota;
+    private float nota;
     @Column(name = "fecha_digitacion")
     @Temporal(TemporalType.DATE)
     private Date fechaDigitacion;

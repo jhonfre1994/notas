@@ -6,6 +6,7 @@ import { UsuariosComponent } from './usuarios/usuarios.component';
 import { CursosComponent } from './cursos/cursos.component';
 import { CursoEstudianteComponent } from './curso-estudiante/curso-estudiante.component';
 import { ActividadesComponent } from './actividades/actividades.component';
+import { RegistrarNotasComponent } from './registrar-notas/registrar-notas.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -20,6 +21,7 @@ const routes: Routes = [
       { path: 'cursos', component: CursosComponent },
       { path: 'cursoEstudiante', component: CursoEstudianteComponent },
       { path: 'actividades', component: ActividadesComponent },
+      { path: 'registrarNotas', component: RegistrarNotasComponent },
     ]
   }
 

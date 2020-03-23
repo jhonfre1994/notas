@@ -80,6 +80,7 @@ export class ActividadesComponent implements OnInit {
   }
 
   actividadesPorCurso(idCurso: number) {
+    this.actividadesList =[]
     this.actividadesService.actividadesPorCurso(idCurso).subscribe(res => {
       if (res != null) {
         console.log(res)

@@ -1,0 +1,53 @@
+<p-toast class="toast"></p-toast>
+<p-confirmDialog header="Confirmación" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<p-fieldset legend="Registrar Notas">
+    <div class="ui-g">
+        <div class="ui-g-12 ui-md-6 ui-lg-4">
+            <p-dropdown [style]="{width: '100%'}" [options]="cursosList" [(ngModel)]="cursoSelected"
+                optionLabel="nombreCurso" placeholder="Cursos" (onChange)="dropDownCurso($event)"></p-dropdown>
+        </div>
+        <div class="ui-g-12 ui-md-6 ui-lg-4">
+            <p-dropdown [style]="{width: '100%'}" [options]="actividadesList" [(ngModel)]="actividadesSelected"
+                optionLabel="nombreActividad" placeholder="Actividad"></p-dropdown>
+        </div>
+        <div class="ui-g-12 ui-md-6 ui-lg-4">
+            <button style="width: 100%;" icon="pi pi-search" pButton type="button" label="Buscar"
+                class="ui-button-success" (click)="buscar()"></button>
+        </div>
+    </div>
+</p-fieldset>
+
+
+<div style="padding-top: 25px;">
+
+    <p-table [value]="notas">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Nombres</th>
+                <th>Nota</th>
+                <th>Acciones</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData>
+            <tr>
+                <td>{{rowData.idEstudiante.nombres}} {{rowData.idEstudiante.apellidos}}</td>
+                <td pEditableColumn>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="text" [(ngModel)]="rowData.nota" required>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{rowData.nota}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td style="text-align: center;">
+                    <button pButton type="button" icon="pi pi-pencil" class="ui-button-success"
+                        (click)="guardarNotas(rowData)"></button>
+                </td>
+
+            </tr>
+        </ng-template>
+    </p-table>
+
+</div>

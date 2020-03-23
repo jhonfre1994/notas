@@ -12,6 +12,7 @@ import { UsuariosComponent } from './usuarios/usuarios.component';
 import { CursosComponent } from './cursos/cursos.component';
 import { CursoEstudianteComponent } from './curso-estudiante/curso-estudiante.component';
 import { ActividadesComponent } from './actividades/actividades.component';
+import { RegistrarNotasComponent } from './registrar-notas/registrar-notas.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { ActividadesComponent } from './actividades/actividades.component';
     UsuariosComponent,
     CursosComponent, 
     CursoEstudianteComponent,
-    ActividadesComponent
+    ActividadesComponent,
+    RegistrarNotasComponent
   ],
   imports: [
     BrowserModule,

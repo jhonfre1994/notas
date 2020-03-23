@@ -21,7 +21,7 @@ public class NotaActividadDTO {
     
     
     private Integer idNota;
-    private Integer nota;
+    private float nota;
     private Date fechaDigitacion;
     private ActividadDTO idActividad;
     private UsrUsuarioDTO idEstudiante;

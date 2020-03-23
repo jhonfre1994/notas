@@ -75,7 +75,7 @@ public class ActividadServiceimpl implements ActividadService{
             return res;
         }
         
-        throw new NoContentException("No hay actividades relacionadas con este curso");
+        throw new BadRequestException("No hay actividades relacionadas con este curso");
         
         
     }

@@ -5,10 +5,17 @@
  */
 package com.notas.service;
 
+import com.notas.dto.NotaActividadDTO;
+import java.util.List;
+
 /**
  *
  * @author UTP
  */
 public interface NotaActividadService {
+    
+    List<NotaActividadDTO> listarNotas(Integer idActividad);
+    
+    NotaActividadDTO actualizarNota(NotaActividadDTO nota);
     
 }

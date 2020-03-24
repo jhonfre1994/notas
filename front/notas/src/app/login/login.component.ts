@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
   }
 
   navigateAfterSuccess() {
-    this.router.navigate(['usuarios'])
+    this.router.navigate(['registrarNotas'])
   }
 
 }

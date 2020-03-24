@@ -22,4 +22,6 @@ public interface NotaActividadRepository extends JpaRepository<NotaActividad, In
     List<NotaActividad> findByIdActividad(Actividad actividad);
 
     NotaActividad findByIdEstudianteAndIdActividad(UsrUsuario estudiante, Actividad actividad);
+
+    List<NotaActividad> findByIdEstudiante(UsrUsuario estudiante);
 }

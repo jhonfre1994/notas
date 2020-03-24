@@ -31,6 +31,12 @@ export class MenuComponent implements OnInit, AfterViewInit {
             command: (event) => {
               this.enviarRegistrarNotas()
             }
+          },
+          {
+            label: 'Reporte Estudiante', icon: 'pi pi-fw pi-chart-line',
+            command: (event) => {
+              this.enviarReporte()
+            }
           }
         ]
       },
@@ -94,5 +100,9 @@ export class MenuComponent implements OnInit, AfterViewInit {
 
   enviarRegistrarNotas() {
     this.router.navigate(['registrarNotas'])
+  }
+
+  enviarReporte() {
+    this.router.navigate(['reporteEstudiante'])
   }
 }

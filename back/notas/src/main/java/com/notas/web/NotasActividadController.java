@@ -46,4 +46,10 @@ public class NotasActividadController {
         NotaActividadDTO notaRes = notaActividadService.actualizarNota(nota);
         return ResponseEntity.ok(notaRes);
     }
+
+    @GetMapping("reporteNotas/{idEstudiante}")
+    public ResponseEntity<?> reporteNotas(@PathVariable("idEstudiante") Integer idEstudiante) {
+        List<NotaActividadDTO> notasRes = notaActividadService.reporteNotas(idEstudiante);
+        return ResponseEntity.ok(notasRes);
+    }
 }

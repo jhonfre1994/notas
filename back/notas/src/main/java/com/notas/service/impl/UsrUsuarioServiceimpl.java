@@ -116,7 +116,25 @@ public class UsrUsuarioServiceimpl implements UsrUsuarioService {
             }
             return res;
         }
-        throw new NoContentException("No existen usuarios en la base de datos");
+        throw new NoContentException("No existen estudiantes en la base de datos");
+    }
+
+    @Override
+    public List<UsrUsuarioDTO> listarProfesores() {
+        List<UsrUsuario> usus = usuarioRepository.findAll();
+        List<UsrUsuarioDTO> res = new ArrayList<>();
+        if (!usus.isEmpty()) {
+            for (UsrUsuario usu : usus) {
+                if (usu.getRol().equals("Profesor")) {
+                    UsrUsuarioDTO item;
+                    item = mapper.map(usu, UsrUsuarioDTO.class);
+                    item.setNombreCompleto(item.getNombres() + " " + item.getApellidos());
+                    res.add(item);
+                }
+            }
+            return res;
+        }
+        throw new NoContentException("No existen profesores en la base de datos, por favor cree uno");
     }
 
 }

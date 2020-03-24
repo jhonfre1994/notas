@@ -43,14 +43,14 @@ export class UsuariosComponent implements OnInit {
     this.listarTodos()
   }
 
-    confirmar(usuario: usuarioDTO) {
-      this.confirmationService.confirm({
-        message: 'Esta seguro que desea eliminar el usuario?',
-        accept: () => {
-          this.eliminarUsuario(usuario)
-        }
-      });
-    }
+  confirmar(usuario: usuarioDTO) {
+    this.confirmationService.confirm({
+      message: 'Esta seguro que desea eliminar el usuario?',
+      accept: () => {
+        this.eliminarUsuario(usuario)
+      }
+    });
+  }
 
   listarTodos() {
     this.usuariosService.listarUsuarios().subscribe(res => {
@@ -58,7 +58,10 @@ export class UsuariosComponent implements OnInit {
         console.log(res)
         this.usuariosList = res;
       }
-    })
+    },
+      error => {
+        this.showToast("error", "", error.error.message);
+      })
   }
 
   public showToast(tipo: string, resumen: string, detalle: string): void {
@@ -116,6 +119,7 @@ export class UsuariosComponent implements OnInit {
           console.log(res)
           this.listarTodos()
           /* this.guardarUsuario = res */
+          this.showToast("success", "Bien", "Usuario guardado correctamente");
         }
         delete this.guardarUsuario
         this.guardarUsuario = new usuarioDTO();
@@ -160,6 +164,7 @@ export class UsuariosComponent implements OnInit {
     this.usuariosService.eliminarUsuario(usu.idUsuario).subscribe(res => {
       if (res != null) {
         console.log(res)
+        this.showToast("success", "Bien", "Usuario eliminado correctamente");
         this.listarTodos()
       }
     })

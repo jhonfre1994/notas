@@ -36,11 +36,15 @@ export class CursosComponent implements OnInit {
         this.cursosList = res;
         console.log(res)
       }
+    },
+    error =>{
+      this.showToast("error", "", error.error.message);
+
     })
   }
 
   listarUsuarios() {
-    this.usuariosService.listarUsuarios().subscribe(res => {
+    this.usuariosService.listarProfesores().subscribe(res => {
       if (res != null) {
         console.log(res)
         this.usuariosLis = res
@@ -89,6 +93,8 @@ export class CursosComponent implements OnInit {
           this.display = false
           this.listarTodos();
           console.log(res)
+          this.showToast("success", "Bien", "Curso guardado correctamente");
+
         }
         this.limpiarCampos()
       })
@@ -122,9 +128,11 @@ export class CursosComponent implements OnInit {
   }
 
   eliminarCurso(curso: CursosDTO) {
+    this.cursosList =[]
     this.cursosService.eliminarCurso(curso.idCurso).subscribe(res => {
       if (res != null) {
         this.listarTodos()
+        this.showToast("success", "Bien", "Curso eliminado correctamente");
       }
     })
   }

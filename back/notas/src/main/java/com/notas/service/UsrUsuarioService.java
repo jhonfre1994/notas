@@ -29,4 +29,6 @@ public interface UsrUsuarioService {
 
     List<UsrUsuarioDTO> listarEstudiantes();
 
+    List<UsrUsuarioDTO> listarProfesores();
+
 }

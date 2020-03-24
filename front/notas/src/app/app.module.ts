@@ -13,6 +13,8 @@ import { CursosComponent } from './cursos/cursos.component';
 import { CursoEstudianteComponent } from './curso-estudiante/curso-estudiante.component';
 import { ActividadesComponent } from './actividades/actividades.component';
 import { RegistrarNotasComponent } from './registrar-notas/registrar-notas.component';
+import { AuthService } from './guard/auth.service';
+import { ReporteEstudianteComponent } from './reporte-estudiante/reporte-estudiante.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,8 @@ import { RegistrarNotasComponent } from './registrar-notas/registrar-notas.compo
     CursosComponent, 
     CursoEstudianteComponent,
     ActividadesComponent,
-    RegistrarNotasComponent
+    RegistrarNotasComponent,
+    ReporteEstudianteComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +35,7 @@ import { RegistrarNotasComponent } from './registrar-notas/registrar-notas.compo
     FormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

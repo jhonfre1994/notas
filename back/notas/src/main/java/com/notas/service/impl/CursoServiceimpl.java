@@ -82,7 +82,7 @@ public class CursoServiceimpl implements CursoService {
             }
             return res;
         }
-        return null;
+        throw new BadRequestException("No se encuentra cursos en la base de datos, por favor cree uno");
     }
 
     @Override

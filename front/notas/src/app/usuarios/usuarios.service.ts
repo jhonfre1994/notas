@@ -24,6 +24,10 @@ export class UsuariosService {
     return this.http.get<usuarioDTO[]>(environment.gatewayServer + "api/v.1/usuarios/listarEstudiantes")
   }
 
+  public listarProfesores(): Observable<usuarioDTO[]> {
+    return this.http.get<usuarioDTO[]>(environment.gatewayServer + "api/v.1/usuarios/listarProfesores")
+  }
+
   public guardarUsuario(usu : usuarioDTO): Observable<usuarioDTO> {
     return this.http.post<usuarioDTO>(environment.gatewayServer + "api/v.1/usuarios/guardarUsuario", usu, this.header)
   }

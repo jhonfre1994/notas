@@ -59,12 +59,17 @@ public class CursoEstudianteServiceimpl implements CursoEstudianteService {
 
     @Override
     public List<UsrUsuarioDTO> listaPorCurso(Integer id) {
+        
         List<CursoEstudiante> datos = cursoEstudianteRepository.cursosEstudiantes(id);
         List<UsrUsuarioDTO> res = new ArrayList<UsrUsuarioDTO>();
 
         if (!datos.isEmpty()) {
             for (CursoEstudiante dato : datos) {
-                res.add(mapper.map(dato.getIdEstudiante(), UsrUsuarioDTO.class));
+                UsrUsuarioDTO item;
+                item = mapper.map(dato.getIdEstudiante(), UsrUsuarioDTO.class);
+                item.setNombreCompleto(dato.getIdEstudiante().getNombres() + " " 
+                        + dato.getIdEstudiante().getApellidos());
+                res.add(item);
             }
             return res;
         }

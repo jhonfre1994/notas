@@ -6,6 +6,7 @@
 package com.notas.service;
 
 import com.notas.dto.NotaActividadDTO;
+import com.notas.dto.UsrUsuarioDTO;
 import java.util.List;
 
 /**
@@ -17,5 +18,7 @@ public interface NotaActividadService {
     List<NotaActividadDTO> listarNotas(Integer idActividad);
     
     NotaActividadDTO actualizarNota(NotaActividadDTO nota);
+    
+    List<NotaActividadDTO> reporteNotas(Integer estudiante);
     
 }

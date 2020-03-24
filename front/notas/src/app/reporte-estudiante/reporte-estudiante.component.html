@@ -1,0 +1,40 @@
+<p-toast class="toast"></p-toast>
+<p-confirmDialog header="Confirmación" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<p-fieldset legend="Reporte estudiante">
+    <div class="ui-g">
+        <div class="ui-g-12 ui-md-6 ui-lg-4">
+            <p-dropdown [style]="{width: '100%'}" [options]="cursosList" [(ngModel)]="cursoSelected"
+                optionLabel="nombreCurso" placeholder="Cursos" (onChange)="dropDownCurso($event)"></p-dropdown>
+        </div>
+        <div class="ui-g-12 ui-md-6 ui-lg-4">
+            <p-dropdown [style]="{width: '100%'}" [options]="estudiantesCurso" [(ngModel)]="usuariosSelected"
+                optionLabel="nombreCompleto" placeholder="Estudiantes" filter="true"></p-dropdown>
+        </div>
+        <div class="ui-g-12 ui-md-6 ui-lg-4">
+            <button style="width: 100%;" icon="pi pi-save" pButton type="button" label="Generar Reporte"
+                class="ui-button-success" (click)="generarReporte()"></button>
+        </div>
+    </div>
+</p-fieldset>
+
+
+
+<div style="padding-top: 25px;">
+    <p-table [value]="notasList">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Nombre Actividad</th>
+                <th>Nota</th>
+                <th >Fecha digitación</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-car>
+            <tr>
+                <td>{{car.idActividad.nombreActividad}}</td>
+                <td style="text-align: center;">{{car.nota}}</td>
+                <td style="text-align: center;">{{car.fechaDigitacion}}</td>
+
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

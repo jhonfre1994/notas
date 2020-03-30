@@ -6,6 +6,7 @@
 package com.notas.repositorios;
 
 import com.notas.entidades.CursoEstudiante;
+import com.notas.entidades.UsrUsuario;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -23,6 +24,8 @@ public interface CursoEstudianteRepository extends JpaRepository<CursoEstudiante
             + "from curso_estudiante ce, curso c\n"
             + "where c.id_curso = :id and ce.id_curso = :id", nativeQuery = true)
     List<CursoEstudiante> cursosEstudiantes(@Param("id") Integer id);
+
+    List<CursoEstudiante> findByIdEstudiante(UsrUsuario usuario);
 
     @Query(value = "select *\n"
             + "from curso_estudiante c\n"

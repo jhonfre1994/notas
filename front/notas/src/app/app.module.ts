@@ -15,6 +15,8 @@ import { ActividadesComponent } from './actividades/actividades.component';
 import { RegistrarNotasComponent } from './registrar-notas/registrar-notas.component';
 import { AuthService } from './guard/auth.service';
 import { ReporteEstudianteComponent } from './reporte-estudiante/reporte-estudiante.component';
+import { LocationStrategy, PathLocationStrategy, HashLocationStrategy } from '@angular/common';
+import { NotaEstudianteComponent } from './nota-estudiante/nota-estudiante.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,8 @@ import { ReporteEstudianteComponent } from './reporte-estudiante/reporte-estudia
     CursoEstudianteComponent,
     ActividadesComponent,
     RegistrarNotasComponent,
-    ReporteEstudianteComponent
+    ReporteEstudianteComponent,
+    NotaEstudianteComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +38,8 @@ import { ReporteEstudianteComponent } from './reporte-estudiante/reporte-estudia
     FormsModule,
     HttpClientModule
   ],
-  providers: [AuthService],
+  providers: [AuthService,
+    { provide: LocationStrategy, useClass: HashLocationStrategy},],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

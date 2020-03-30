@@ -1,0 +1,34 @@
+<div *ngFor="let nota of notas" >
+    <div class="ui-g" style="margin-top: 30px;">
+        <div class="ui-g-12 ui-md-6 ui-lg-4 divCell">
+            <p><strong>Materia : </strong> {{nota.curso.nombreCurso}}</p>
+        </div>
+        <div class="ui-g-12 ui-md-6 ui-lg-4 divCell">
+            <p> <strong>Código</strong> :{{nota.curso.codigo}}</p>
+        </div>
+        <div class="ui-g-12 ui-md-6 ui-lg-4 divCell">
+            <p><strong> Promedio</strong> : {{nota.promedio}}</p>
+        </div>
+    </div>
+
+    <div class="ui-g" style="padding-bottom: 50px;">
+        <div class="ui-g-12 divCell">
+            <p-table [value]="nota.notas">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Actividad</th>
+                        <th>Nota</th>
+                        <th>Fecha digitación</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-car>
+                    <tr>
+                        <td>{{car.idActividad.nombreActividad}}</td>
+                        <td style="text-align: center;">{{car.nota}}</td>
+                        <td style="text-align: center;">{{car.fechaDigitacion}}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>

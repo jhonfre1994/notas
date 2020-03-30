@@ -6,6 +6,7 @@
 package com.notas.service;
 
 import com.notas.dto.NotaActividadDTO;
+import com.notas.dto.NotasEstudianteDTO;
 import com.notas.dto.UsrUsuarioDTO;
 import java.util.List;
 
@@ -19,6 +20,8 @@ public interface NotaActividadService {
     
     NotaActividadDTO actualizarNota(NotaActividadDTO nota);
     
-    List<NotaActividadDTO> reporteNotas(Integer estudiante);
+    List<NotaActividadDTO> reporteNotas(Integer estudiante, Integer curso);
+    
+    List<NotasEstudianteDTO> notasPorEstudiante(Integer estudiante);
     
 }

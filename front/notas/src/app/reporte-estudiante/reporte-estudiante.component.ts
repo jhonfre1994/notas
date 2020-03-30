@@ -61,7 +61,7 @@ export class ReporteEstudianteComponent implements OnInit {
     this.notasList = []
     console.log(this.cursoSelected)
     console.log(this.usuariosSelected)
-    this.registrarNotasService.reporteNotas(this.usuariosSelected.idUsuario).subscribe(res => {
+    this.registrarNotasService.reporteNotas(this.usuariosSelected.idUsuario, this.cursoSelected.idCurso).subscribe(res => {
       if (res != null) {
         this.notasList = res
       }

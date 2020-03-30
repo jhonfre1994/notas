@@ -21,10 +21,12 @@ export class MenuComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    let responsable = JSON.parse(sessionStorage.getItem("usuario"))
     this.items = [
       {
         label: 'Opciones',
         icon: 'pi pi-fw pi-pencil',
+        visible: responsable.rol === 'Estudiante' ? false : true,
         items: [
           {
             label: 'Registrar notas', icon: 'pi pi-fw pi-chart-line',
@@ -43,7 +45,7 @@ export class MenuComponent implements OnInit, AfterViewInit {
       {
         label: 'Configuración',
         icon: 'pi pi-fw pi-cog',
-        /*  visible: this.responsable.rol === 'Usuario' ? false : true, */
+        visible: responsable.rol === 'Estudiante' ? false : true,
         items: [
           {
             label: 'Usuarios', icon: 'pi pi-users',
@@ -70,7 +72,20 @@ export class MenuComponent implements OnInit, AfterViewInit {
           }
 
         ]
-      }
+      },
+      {
+        label: 'Portal',
+        icon: 'pi pi-fw pi-pencil',
+        visible: responsable.rol === 'Profesor' ? false : true,
+        items: [
+          {
+            label: 'Ver notas', icon: 'pi pi-fw pi-chart-line',
+            command: (event) => {
+              this.notasEstudiante()
+            }
+          }
+        ]
+      },
     ];
   }
 
@@ -100,6 +115,10 @@ export class MenuComponent implements OnInit, AfterViewInit {
 
   enviarRegistrarNotas() {
     this.router.navigate(['registrarNotas'])
+  }
+
+  notasEstudiante() {
+    this.router.navigate(['notasEstudiante'])
   }
 
   enviarReporte() {

@@ -9,6 +9,7 @@ import { ActividadesComponent } from './actividades/actividades.component';
 import { RegistrarNotasComponent } from './registrar-notas/registrar-notas.component';
 import { AuthService } from './guard/auth.service';
 import { ReporteEstudianteComponent } from './reporte-estudiante/reporte-estudiante.component';
+import { NotaEstudianteComponent } from './nota-estudiante/nota-estudiante.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -20,12 +21,15 @@ const routes: Routes = [
     component: MenuComponent,
     canActivate: [AuthService],
     children: [
-      { path: 'usuarios', component: UsuariosComponent},
+      { path: 'usuarios', component: UsuariosComponent },
       { path: 'cursos', component: CursosComponent },
       { path: 'cursoEstudiante', component: CursoEstudianteComponent },
       { path: 'actividades', component: ActividadesComponent },
       { path: 'registrarNotas', component: RegistrarNotasComponent },
       { path: 'reporteEstudiante', component: ReporteEstudianteComponent },
+      { path: 'notasEstudiante', component: NotaEstudianteComponent },
+
+
 
     ]
   }

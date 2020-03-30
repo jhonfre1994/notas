@@ -6,6 +6,7 @@
 package com.notas.web;
 
 import com.notas.dto.NotaActividadDTO;
+import com.notas.dto.NotasEstudianteDTO;
 import com.notas.service.NotaActividadService;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,9 +48,17 @@ public class NotasActividadController {
         return ResponseEntity.ok(notaRes);
     }
 
-    @GetMapping("reporteNotas/{idEstudiante}")
-    public ResponseEntity<?> reporteNotas(@PathVariable("idEstudiante") Integer idEstudiante) {
-        List<NotaActividadDTO> notasRes = notaActividadService.reporteNotas(idEstudiante);
+    @GetMapping("reporteNotas/{idEstudiante}/{idCurso}")
+    public ResponseEntity<?> reporteNotas(@PathVariable("idEstudiante") Integer idEstudiante,
+            @PathVariable("idCurso") Integer idCurso) {
+        List<NotaActividadDTO> notasRes = notaActividadService.reporteNotas(idEstudiante, idCurso);
         return ResponseEntity.ok(notasRes);
     }
+
+    @GetMapping("notasEstudiante/{idEstudiante}")
+    public ResponseEntity<?> notasEstudiante(@PathVariable("idEstudiante") Integer idEstudiante) {
+        List<NotasEstudianteDTO> notasRes = notaActividadService.notasPorEstudiante(idEstudiante);
+        return ResponseEntity.ok(notasRes);
+    }
+
 }

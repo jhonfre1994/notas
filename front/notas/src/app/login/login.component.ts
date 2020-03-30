@@ -28,9 +28,14 @@ export class LoginComponent implements OnInit {
   login() {
     this.loginService.login(this.loginAccess).subscribe(res => {
       if (res != null) {
-        console.log(res)
-        this.navigateAfterSuccess()
-        sessionStorage.setItem("usuario",JSON.stringify(res))
+        res.contrasena = ''
+        sessionStorage.setItem("usuario", JSON.stringify(res))
+        if (res.rol == 'Profesor') {
+          this.navigateAfterSuccess()
+        } else {
+          this.navigateVerNotas()
+        }
+
       }
     },
       error => {
@@ -45,6 +50,10 @@ export class LoginComponent implements OnInit {
 
   navigateAfterSuccess() {
     this.router.navigate(['registrarNotas'])
+  }
+
+  navigateVerNotas() {
+    this.router.navigate(['notasEstudiante'])
   }
 
 }

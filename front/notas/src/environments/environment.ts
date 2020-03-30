@@ -4,7 +4,9 @@
 
 export const environment = {
   production: false,
-  gatewayServer:'http://localhost:8081/'
+  //gatewayServer:'http://localhost:8081/'
+  gatewayServer: 'http://104.154.93.59:8081/'
+
 };
 
 /*

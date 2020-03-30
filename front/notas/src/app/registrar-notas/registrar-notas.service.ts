@@ -26,8 +26,8 @@ export class RegistrarNotasService {
     return this.http.post<RegistrarNotasDTO>(environment.gatewayServer + "api/v.1/notas/actualizarNota", idActividad, this.header)
   }
 
-  public reporteNotas(idEstudiante: number): Observable<RegistrarNotasDTO[]> {
-    return this.http.get<RegistrarNotasDTO[]>(environment.gatewayServer + "api/v.1/notas/reporteNotas/" + idEstudiante)
+  public reporteNotas(idEstudiante: number, idCurso: number): Observable<RegistrarNotasDTO[]> {
+    return this.http.get<RegistrarNotasDTO[]>(environment.gatewayServer + "api/v.1/notas/reporteNotas/" + idEstudiante +"/" + idCurso)
   }
 
 }

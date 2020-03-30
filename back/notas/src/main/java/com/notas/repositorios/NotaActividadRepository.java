@@ -10,6 +10,8 @@ import com.notas.entidades.NotaActividad;
 import com.notas.entidades.UsrUsuario;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -22,6 +24,11 @@ public interface NotaActividadRepository extends JpaRepository<NotaActividad, In
     List<NotaActividad> findByIdActividad(Actividad actividad);
 
     NotaActividad findByIdEstudianteAndIdActividad(UsrUsuario estudiante, Actividad actividad);
+
+    @Query(value = "select *\n"
+            + "from nota_actividad na\n"
+            + "where na.id_actividad = :idAct and id_estudiante = :idEs", nativeQuery = true)
+    NotaActividad notaActividadEstudiante(@Param("idAct") Integer idAct, @Param("idEs") Integer idEs);
 
     List<NotaActividad> findByIdEstudiante(UsrUsuario estudiante);
 }

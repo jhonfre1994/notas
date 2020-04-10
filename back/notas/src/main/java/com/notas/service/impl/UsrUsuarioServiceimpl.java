@@ -14,7 +14,6 @@ import com.notas.exceptions.responses.NoContentException;
 import com.notas.exceptions.responses.NotFoundException;
 import com.notas.repositorios.UsrUsuarioRepository;
 import com.notas.service.UsrUsuarioService;
-import com.notas.utils.PasswordUtils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -22,6 +21,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -37,8 +37,6 @@ public class UsrUsuarioServiceimpl implements UsrUsuarioService {
     @Autowired
     private ModelMapper mapper;
 
-    private PasswordUtils PasswordUtils;
-
     @Autowired
     private UsrUsuarioRolImlp usrUsuarioRolImlp;
 
@@ -48,7 +46,7 @@ public class UsrUsuarioServiceimpl implements UsrUsuarioService {
         UsrUsuario usuAux;
         UsuarioSaveDTO res = new UsuarioSaveDTO();
         try {
-            usuario.getUsuario().setContrasena(PasswordUtils.encrypt(usuario.getUsuario().getContrasena(), "Adw24daAFT42dA346SV"));
+            usuario.getUsuario().setContrasena(new BCryptPasswordEncoder().encode(usuario.getUsuario().getContrasena()));
             usuAux = usuarioRepository.save(mapper.map(usuario.getUsuario(), UsrUsuario.class));
             if (!usuario.getRoles().isEmpty()) {
                 List<UsrRolDTO> roles = usrUsuarioRolImlp.actualizarRoles(usuario.getRoles(), mapper.map(usuAux, UsrUsuarioDTO.class));
@@ -99,21 +97,20 @@ public class UsrUsuarioServiceimpl implements UsrUsuarioService {
 
     @Override
     public UsrUsuarioDTO iniciarSesion(login login) {
-
-        UsrUsuarioDTO usu = consultarNombreUsuario(login.getUsername());
-
-        if (usu != null) {
-            try {
-                String pass = "";
-                pass = PasswordUtils.decrypt(usu.getContrasena(), "Adw24daAFT42dA346SV");
-                if (pass.equals(login.getPassword())) {
-                    return mapper.map(usu, UsrUsuarioDTO.class);
-                }
-            } catch (Exception ex) {
-                Logger.getLogger(UsrUsuarioServiceimpl.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-        }
+//
+//        UsrUsuarioDTO usu = consultarNombreUsuario(login.getUsername());
+//
+//        if (usu != null) {
+//            try {
+//                String pass = "";
+//                if (pass.equals(login.getPassword())) {
+//                    return mapper.map(usu, UsrUsuarioDTO.class);
+//                }
+//            } catch (Exception ex) {
+//                Logger.getLogger(UsrUsuarioServiceimpl.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//
+//        }
         throw new NotFoundException("Usuario y/o contraseña incorrectos");
     }
 

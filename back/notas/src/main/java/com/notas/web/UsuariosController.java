@@ -9,10 +9,10 @@ import com.notas.dto.UsrUsuarioDTO;
 import com.notas.dto.UsuarioSaveDTO;
 import com.notas.dto.login;
 import com.notas.service.UsrUsuarioService;
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,24 +39,28 @@ public class UsuariosController {
     }
 
     @GetMapping()
+    @PreAuthorize("hasAuthority('Profesor') or hasAuthority('Administrador')")
     public ResponseEntity<?> listarTodos() {
         List<UsrUsuarioDTO> res = usuarioService.listarTodos();
         return ResponseEntity.ok(res);
     }
-    
+
     @GetMapping("listarEstudiantes")
+    @PreAuthorize("hasAuthority('Profesor') or hasAuthority('Administrador')")
     public ResponseEntity<?> listarEstudiantes() {
         List<UsrUsuarioDTO> res = usuarioService.listarEstudiantes();
         return ResponseEntity.ok(res);
     }
-    
+
     @GetMapping("listarProfesores")
+    @PreAuthorize("hasAuthority('Profesor') or hasAuthority('Administrador')")
     public ResponseEntity<?> listarProfesores() {
         List<UsrUsuarioDTO> res = usuarioService.listarProfesores();
         return ResponseEntity.ok(res);
     }
 
     @GetMapping("consularPorUsuario/{nombreUsuario}")
+    @PreAuthorize("hasAuthority('Profesor') or hasAuthority('Administrador')")
     public ResponseEntity<?> consultaPorUsuario(@PathVariable("nombreUsuario") String nombreUsuario) {
         UsrUsuarioDTO res = usuarioService.consultarNombreUsuario(nombreUsuario);
 
@@ -67,6 +71,7 @@ public class UsuariosController {
     }
 
     @GetMapping("consularPorId/{id}")
+    @PreAuthorize("hasAuthority('Profesor') or hasAuthority('Administrador')")
     public ResponseEntity<?> consultaPorUsuario(@PathVariable("id") Integer id) {
         UsrUsuarioDTO res = usuarioService.consultarUsuario(id);
 
@@ -77,6 +82,7 @@ public class UsuariosController {
     }
 
     @DeleteMapping("eliminarUsuario/{id}")
+    @PreAuthorize("hasAuthority('Profesor') or hasAuthority('Administrador')")
     public ResponseEntity<?> eliminarUsuario(@PathVariable("id") Integer id) {
         UsrUsuarioDTO res = usuarioService.eliminarUsuario(id);
         if (res != null) {
@@ -86,6 +92,7 @@ public class UsuariosController {
     }
 
     @PostMapping("guardarUsuario")
+    @PreAuthorize("hasAuthority('Profesor') or hasAuthority('Administrador')")
     public ResponseEntity<?> guardarUsuario(@RequestBody UsuarioSaveDTO usuario) {
         UsuarioSaveDTO res = usuarioService.guardarUsuario(usuario);
         if (res != null) {
@@ -95,6 +102,7 @@ public class UsuariosController {
     }
 
     @PostMapping("login")
+    @PreAuthorize("hasAuthority('Profesor') or hasAuthority('Administrador')")
     public ResponseEntity<?> inisiarSesion(@RequestBody login login) {
         UsrUsuarioDTO res = usuarioService.iniciarSesion(login);
 

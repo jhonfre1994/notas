@@ -17,6 +17,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Optional;
 import org.modelmapper.ModelMapper;
 
@@ -100,25 +101,32 @@ public class UsrUsuarioRolImlp implements UsrUsuarioRolService {
             }
             return res;
         }
-        return null;
+        return new ArrayList<>();
+    }
+
+    public static <T> boolean listEqualsIgnoreOrder(List<UsrRolDTO> list1, List<UsrRolDTO> list2) {
+        return new HashSet<>(list1).equals(new HashSet<>(list2));
     }
 
     @Override
     public List<UsrRolDTO> actualizarRoles(List<UsrRolDTO> roles, UsrUsuarioDTO usuario) {
         List<UsrUsuarioRol> lista = usrUsuarioRolRepository.listarRoles(usuario.getIdUsuario());
         List<UsrUsuarioRolDTO> respuesta = new ArrayList<>();
-        if (lista != null || !lista.isEmpty()) {
-            usrUsuarioRolRepository.deleteInBatch(lista);
-            for (UsrRolDTO rol : roles) {
-                UsrUsuarioRol usrEntity = new UsrUsuarioRol();
-                usrEntity.setId(0);
-                usrEntity.setUserId(mapper.map(usuario, UsrUsuario.class));
-                usrEntity.setIdRol(mapper.map(rol, UsrRol.class));
-                usrUsuarioRolRepository.save(usrEntity);
+        List<UsrRolDTO> rolesUsu = rolesUsuario(usuario);
+        System.out.println(listEqualsIgnoreOrder(rolesUsu, roles));
+        if (listEqualsIgnoreOrder(rolesUsu, roles) == false) {
+            if (lista != null || !lista.isEmpty()) {
+                usrUsuarioRolRepository.deleteInBatch(lista);
+                for (UsrRolDTO rol : roles) {
+                    UsrUsuarioRol usrEntity = new UsrUsuarioRol();
+                    usrEntity.setId(0);
+                    usrEntity.setUserId(mapper.map(usuario, UsrUsuario.class));
+                    usrEntity.setIdRol(mapper.map(rol, UsrRol.class));
+                    usrUsuarioRolRepository.save(usrEntity);
 //                respuesta.add(mapper.map(usrEntity, UsrUsuarioRolDTO.class));
+                }
             }
         }
-
         return roles;
     }
 

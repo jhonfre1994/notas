@@ -47,9 +47,12 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
         http.authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/api/v.1/**").authenticated()
-                .antMatchers(HttpMethod.POST, "/api/v.1/**").authenticated()
+                .antMatchers(HttpMethod.GET, "/api/v.1/**").authenticated()
+                .antMatchers(HttpMethod.POST, "/api/v.1/usuarios/consularPorUsuario/**").permitAll()
                 .antMatchers(HttpMethod.PUT, "/api/v.1/**").authenticated()
-                .antMatchers(HttpMethod.DELETE, "/api/v.1/**").authenticated();
+                .antMatchers(HttpMethod.DELETE, "/api/v.1/**").authenticated()
+                .and()
+                .cors().and().csrf().disable();
     }
 
     @Bean

@@ -60,7 +60,6 @@ public class UsuariosController {
     }
 
     @GetMapping("consularPorUsuario/{nombreUsuario}")
-    @PreAuthorize("hasAuthority('Profesor') or hasAuthority('Administrador')")
     public ResponseEntity<?> consultaPorUsuario(@PathVariable("nombreUsuario") String nombreUsuario) {
         UsrUsuarioDTO res = usuarioService.consultarNombreUsuario(nombreUsuario);
 

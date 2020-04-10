@@ -6,7 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './login/login.component';
 import { MaterialModule } from './material-module';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MenuComponent } from './menu/menu.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { CursosComponent } from './cursos/cursos.component';
@@ -17,6 +17,8 @@ import { AuthService } from './guard/auth.service';
 import { ReporteEstudianteComponent } from './reporte-estudiante/reporte-estudiante.component';
 import { LocationStrategy, PathLocationStrategy, HashLocationStrategy } from '@angular/common';
 import { NotaEstudianteComponent } from './nota-estudiante/nota-estudiante.component';
+import { HttpModule } from '@angular/http';
+import { TokenInterceptor } from './interceptors/token.interceptor';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,7 @@ import { NotaEstudianteComponent } from './nota-estudiante/nota-estudiante.compo
     LoginComponent,
     MenuComponent,
     UsuariosComponent,
-    CursosComponent, 
+    CursosComponent,
     CursoEstudianteComponent,
     ActividadesComponent,
     RegistrarNotasComponent,
@@ -36,10 +38,19 @@ import { NotaEstudianteComponent } from './nota-estudiante/nota-estudiante.compo
     BrowserAnimationsModule,
     MaterialModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    HttpModule
   ],
   providers: [AuthService,
-    { provide: LocationStrategy, useClass: HashLocationStrategy},],
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }
+
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

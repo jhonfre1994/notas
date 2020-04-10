@@ -18,5 +18,10 @@ export class LoginService {
   public login(login : loginDTO):Observable<usuarioDTO>{
     return this.http.post<usuarioDTO>(environment.gatewayServer + "api/v.1/usuarios/login", login, this.header)
   }
+
+  public consultarUsr(username : string):Observable<usuarioDTO>{
+    return this.http.get<usuarioDTO>(environment.gatewayServer + "api/v.1/usuarios/consularPorUsuario/"+username)
+  }
+
   
 }

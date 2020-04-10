@@ -1,21 +1,27 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from './login.service';
 import { loginDTO } from '../dto/loginDTO';
-import { MessageService } from 'primeng/api';
+import { MessageService, Message } from 'primeng/api';
 import { Router } from '@angular/router';
+import { AuthenticationService } from '../services/authentication.service';
+import { UserService } from '../services/user.service';
+import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  providers: [LoginService, MessageService]
+  providers: [LoginService, MessageService, AuthenticationService, UserService]
 })
 export class LoginComponent implements OnInit {
 
+  msgs: Message[] = [];
   loginAccess: loginDTO = new loginDTO();
   constructor(private loginService: LoginService,
     private messageService: MessageService,
-    public router: Router) { }
+    public router: Router,
+    private authenticationService: AuthenticationService,
+    private userService: UserService) { }
 
   ngOnInit() {
     sessionStorage.clear();
@@ -25,7 +31,7 @@ export class LoginComponent implements OnInit {
 
   }
 
-  login() {
+  login2() {
     this.loginService.login(this.loginAccess).subscribe(res => {
       if (res != null) {
         res.contrasena = ''
@@ -45,7 +51,12 @@ export class LoginComponent implements OnInit {
   }
 
   show(error: string) {
-    this.messageService.add({ severity: 'error', summary: 'Error', detail: error });
+    this.msgs = [];
+    this.msgs.push({ severity: 'error', summary: 'Error', detail: error });
+  }
+
+  hide() {
+    this.msgs = [];
   }
 
   navigateAfterSuccess() {
@@ -56,4 +67,41 @@ export class LoginComponent implements OnInit {
     this.router.navigate(['notasEstudiante'])
   }
 
+
+  login() {
+    this.authenticationService.login(this.loginAccess.username, this.loginAccess.password)
+      .subscribe(
+        result => {
+          if (result) {
+            console.log(result)
+            this.userService.SavesessionStorage(result.access_token, result.refresh_token);
+            this.loginService.consultarUsr(this.loginAccess.username).subscribe(res => {
+              console.log(res)
+              if (res != null) {
+                res.contrasena = ''
+                res.roles = []
+                sessionStorage.setItem("usuario", JSON.stringify(res))
+                this.navigateAfterSuccess();
+              }
+            })
+          } else {
+            console.log("contraseña incorrecta")
+            /* this.IsWait = false;
+            this.openSnackBar("El nombre de ususario o contraseña estan incorrectos", "!Cuidado¡"); */
+          }
+        },
+        error => {
+          let body = JSON.parse(error._body)
+          /* if (body.error_description === 'UserDetailsService returned null, which is an interface contract violation') {
+            this.openSnackBar("El usuario esta inactivo", "!Cuidado¡");
+          } else {
+            this.openSnackBar("El nombre de ususario o contraseña estan incorrectos", "!Cuidado¡");
+          }
+          this.IsWait = false; */
+          if (body.error_description === 'Bad credentials') {
+            this.show("Usuario y/o contraseña incorrectos")
+          }
+        }
+      );
+  }
 }

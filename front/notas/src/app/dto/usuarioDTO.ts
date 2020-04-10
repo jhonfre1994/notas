@@ -1,3 +1,5 @@
+import { RolDTO } from './RolDTO';
+
 export class usuarioDTO{
 
 
@@ -10,4 +12,5 @@ export class usuarioDTO{
     public genero : string;
     public rol : string;
     public nombreCompleto: string;
+    public roles: Array<RolDTO>;
 }

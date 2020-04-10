@@ -27,7 +27,8 @@ public class UsrUsuarioDTO {
     private String genero;
     private String contrasena;
     private String rol;
-    private String nombreCompleto; 
+    private String nombreCompleto;
+    private List<UsrRolDTO> roles;
 //    private List<CursoDTO> cursoList;
 //    private List<NotaActividadDTO> notaActividadList;
 //    private List<CursoEstudianteDTO> cursoEstudianteList;

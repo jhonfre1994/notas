@@ -6,6 +6,7 @@
 package com.notas.service;
 
 import com.notas.dto.UsrUsuarioDTO;
+import com.notas.dto.UsuarioSaveDTO;
 import com.notas.dto.login;
 import java.util.List;
 
@@ -15,7 +16,7 @@ import java.util.List;
  */
 public interface UsrUsuarioService {
 
-    UsrUsuarioDTO guardarUsuario(UsrUsuarioDTO usuario);
+    UsuarioSaveDTO guardarUsuario(UsuarioSaveDTO usuario);
 
     UsrUsuarioDTO consultarUsuario(Integer id);
 

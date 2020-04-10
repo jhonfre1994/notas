@@ -5,7 +5,9 @@
  */
 package com.notas.service.impl;
 
+import com.notas.dto.UsrRolDTO;
 import com.notas.dto.UsrUsuarioDTO;
+import com.notas.dto.UsuarioSaveDTO;
 import com.notas.dto.login;
 import com.notas.entidades.UsrUsuario;
 import com.notas.exceptions.responses.NoContentException;
@@ -13,7 +15,6 @@ import com.notas.exceptions.responses.NotFoundException;
 import com.notas.repositorios.UsrUsuarioRepository;
 import com.notas.service.UsrUsuarioService;
 import com.notas.utils.PasswordUtils;
-import com.notas.web.UsuariosController;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -38,13 +39,23 @@ public class UsrUsuarioServiceimpl implements UsrUsuarioService {
 
     private PasswordUtils PasswordUtils;
 
+    @Autowired
+    private UsrUsuarioRolImlp usrUsuarioRolImlp;
+
     @Override
-    public UsrUsuarioDTO guardarUsuario(UsrUsuarioDTO usuario) {
-        UsrUsuario res;
+    public UsuarioSaveDTO guardarUsuario(UsuarioSaveDTO usuario) {
+        mapper.getConfiguration().setAmbiguityIgnored(true);
+        UsrUsuario usuAux;
+        UsuarioSaveDTO res = new UsuarioSaveDTO();
         try {
-            usuario.setContrasena(PasswordUtils.encrypt(usuario.getContrasena(), "Adw24daAFT42dA346SV"));
-            res = usuarioRepository.save(mapper.map(usuario, UsrUsuario.class));
-            return mapper.map(res, UsrUsuarioDTO.class);
+            usuario.getUsuario().setContrasena(PasswordUtils.encrypt(usuario.getUsuario().getContrasena(), "Adw24daAFT42dA346SV"));
+            usuAux = usuarioRepository.save(mapper.map(usuario.getUsuario(), UsrUsuario.class));
+            if (!usuario.getRoles().isEmpty()) {
+                List<UsrRolDTO> roles = usrUsuarioRolImlp.actualizarRoles(usuario.getRoles(), mapper.map(usuAux, UsrUsuarioDTO.class));
+                res.setRoles(roles);
+            }
+            res.setUsuario(mapper.map(usuAux, UsrUsuarioDTO.class));
+            return res;
         } catch (Exception ex) {
             Logger.getLogger(UsrUsuarioServiceimpl.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -58,6 +69,7 @@ public class UsrUsuarioServiceimpl implements UsrUsuarioService {
 
         if (usuario.isPresent()) {
             res = mapper.map(usuario.get(), UsrUsuarioDTO.class);
+            res.setRoles(usrUsuarioRolImlp.rolesUsuario(res));
             return res;
         }
         return null;
@@ -69,6 +81,7 @@ public class UsrUsuarioServiceimpl implements UsrUsuarioService {
         UsrUsuario usu = usuarioRepository.findByNombreUsuario(usuario);
         if (usu != null) {
             res = mapper.map(usu, UsrUsuarioDTO.class);
+            res.setRoles(usrUsuarioRolImlp.rolesUsuario(res));
             return res;
         }
         return null;
@@ -113,6 +126,7 @@ public class UsrUsuarioServiceimpl implements UsrUsuarioService {
                 UsrUsuarioDTO item;
                 item = mapper.map(usu, UsrUsuarioDTO.class);
                 item.setNombreCompleto(item.getNombres() + " " + item.getApellidos());
+                item.setRoles(usrUsuarioRolImlp.rolesUsuario(item));
                 res.add(item);
             }
             return res;

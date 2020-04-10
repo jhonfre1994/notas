@@ -6,6 +6,7 @@
 package com.notas.web;
 
 import com.notas.dto.UsrUsuarioDTO;
+import com.notas.dto.UsuarioSaveDTO;
 import com.notas.dto.login;
 import com.notas.service.UsrUsuarioService;
 import java.util.ArrayList;
@@ -85,8 +86,8 @@ public class UsuariosController {
     }
 
     @PostMapping("guardarUsuario")
-    public ResponseEntity<?> guardarUsuario(@RequestBody UsrUsuarioDTO usuario) {
-        UsrUsuarioDTO res = usuarioService.guardarUsuario(usuario);
+    public ResponseEntity<?> guardarUsuario(@RequestBody UsuarioSaveDTO usuario) {
+        UsuarioSaveDTO res = usuarioService.guardarUsuario(usuario);
         if (res != null) {
             return ResponseEntity.ok(res);
         }

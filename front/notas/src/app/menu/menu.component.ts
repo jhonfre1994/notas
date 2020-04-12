@@ -32,7 +32,6 @@ export class MenuComponent implements OnInit, AfterViewInit {
     this.nombeUsuario = responsable.nombres + " " + responsable.apellidos
     const token = sessionStorage.getItem("access_token");
     const tokenPayload = decode(token);
-    debugger
     if(responsable.genero === 'M'){
       this.bienvenido = "Bienvenido"
     }else{

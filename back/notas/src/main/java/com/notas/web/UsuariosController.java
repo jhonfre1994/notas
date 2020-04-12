@@ -48,14 +48,14 @@ public class UsuariosController {
     @GetMapping("listarEstudiantes")
     @PreAuthorize("hasAuthority('Profesor') or hasAuthority('Administrador')")
     public ResponseEntity<?> listarEstudiantes() {
-        List<UsrUsuarioDTO> res = usuarioService.listarEstudiantes();
+        List<UsrUsuarioDTO> res = usuarioService.buscarUsuarosPorRol("Estudiante");
         return ResponseEntity.ok(res);
     }
 
     @GetMapping("listarProfesores")
     @PreAuthorize("hasAuthority('Profesor') or hasAuthority('Administrador')")
     public ResponseEntity<?> listarProfesores() {
-        List<UsrUsuarioDTO> res = usuarioService.listarProfesores();
+        List<UsrUsuarioDTO> res = usuarioService.buscarUsuarosPorRol("Profesor");
         return ResponseEntity.ok(res);
     }
 
@@ -107,5 +107,5 @@ public class UsuariosController {
 
         return ResponseEntity.ok(res);
     }
-
+    
 }

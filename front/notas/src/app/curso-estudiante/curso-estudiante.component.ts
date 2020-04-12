@@ -42,7 +42,6 @@ export class CursoEstudianteComponent implements OnInit {
     this.cursosService.listarCursosPorfesor(IdProfesor).subscribe(res => {
       if (res != null) {
         this.cursosList = res
-        console.log(res)
       }
     })
   }
@@ -68,10 +67,8 @@ export class CursoEstudianteComponent implements OnInit {
     this.guardarDatos.curso = this.cursoSelected
     this.guardarDatos.estudiantes = this.usuariosSelected
     if (this.comprobarParametros() == true) {
-      console.log(this.guardarDatos)
       this.cursoEstudianteService.asignarEstudiantes(this.guardarDatos).subscribe(res => {
         if (res != null) {
-          console.log(res)
           delete this.guardarDatos
           this.guardarDatos = new SaveCursoEstudiante()
           this.estudiantesPorCurso(this.cursoSelected.idCurso)
@@ -84,7 +81,6 @@ export class CursoEstudianteComponent implements OnInit {
     this.usuariosService.listarEstudiantes().subscribe(res => {
       if (res != null) {
         this.usuariosList = res
-        console.log(res)
       }
     })
   }
@@ -98,7 +94,6 @@ export class CursoEstudianteComponent implements OnInit {
     this.cursoEstudianteService.estudiantesCursos(idCurso).subscribe(res => {
       if (res != null) {
         this.estudiantesCurso = res;
-        console.log(res)
       }
     },
     error =>{
@@ -116,8 +111,6 @@ export class CursoEstudianteComponent implements OnInit {
   }
 
   eliminar(estudiante: usuarioDTO){
-    console.log(estudiante)
-    console.log(this.cursoSelected)
     this.cursoEstudianteService.eliminarEstudiantes(estudiante.idUsuario,this.cursoSelected.idCurso).
     subscribe(res =>{
       if(res != null){

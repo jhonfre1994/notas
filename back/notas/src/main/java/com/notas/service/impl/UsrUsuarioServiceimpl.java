@@ -9,10 +9,13 @@ import com.notas.dto.UsrRolDTO;
 import com.notas.dto.UsrUsuarioDTO;
 import com.notas.dto.UsuarioSaveDTO;
 import com.notas.dto.login;
+import com.notas.entidades.UsrRol;
 import com.notas.entidades.UsrUsuario;
+import com.notas.entidades.UsrUsuarioRol;
 import com.notas.exceptions.responses.NoContentException;
 import com.notas.exceptions.responses.NotFoundException;
 import com.notas.repositorios.UsrUsuarioRepository;
+import com.notas.repositorios.UsrUsuarioRolRepository;
 import com.notas.service.UsrUsuarioService;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,13 +43,30 @@ public class UsrUsuarioServiceimpl implements UsrUsuarioService {
     @Autowired
     private UsrUsuarioRolImlp usrUsuarioRolImlp;
 
+    @Autowired
+    private UsrRolImpl usrRolImpl;
+
+    @Autowired
+    private UsrUsuarioRolRepository usrUsuarioRolRepository;
+
+
     @Override
     public UsuarioSaveDTO guardarUsuario(UsuarioSaveDTO usuario) {
         mapper.getConfiguration().setAmbiguityIgnored(true);
         UsrUsuario usuAux;
+        UsrUsuarioDTO usuExist = consultarNombreUsuario(usuario.getUsuario().getNombreUsuario());
         UsuarioSaveDTO res = new UsuarioSaveDTO();
         try {
-            usuario.getUsuario().setContrasena(new BCryptPasswordEncoder().encode(usuario.getUsuario().getContrasena()));
+            if (usuExist != null) {
+                if (usuario.getUsuario().getContrasena().equals("")) {
+                    usuario.getUsuario().setContrasena(usuExist.getContrasena());
+                } else {
+                    usuario.getUsuario().setContrasena(new BCryptPasswordEncoder().encode(usuario.getUsuario().getContrasena()));
+                }
+            } else {
+                usuario.getUsuario().setContrasena(new BCryptPasswordEncoder().encode(usuario.getUsuario().getContrasena()));
+            }
+
             usuAux = usuarioRepository.save(mapper.map(usuario.getUsuario(), UsrUsuario.class));
             if (!usuario.getRoles().isEmpty()) {
                 List<UsrRolDTO> roles = usrUsuarioRolImlp.actualizarRoles(usuario.getRoles(), mapper.map(usuAux, UsrUsuarioDTO.class));
@@ -132,40 +152,23 @@ public class UsrUsuarioServiceimpl implements UsrUsuarioService {
     }
 
     @Override
-    public List<UsrUsuarioDTO> listarEstudiantes() {
-
-        List<UsrUsuario> usus = usuarioRepository.findAll();
+    public List<UsrUsuarioDTO> buscarUsuarosPorRol(String role) {
         List<UsrUsuarioDTO> res = new ArrayList<>();
-        if (!usus.isEmpty()) {
-            for (UsrUsuario usu : usus) {
-                if (usu.getRol().equals("Estudiante")) {
+        UsrRolDTO rol = usrRolImpl.consultarRolname(role);
+        if (rol != null) {
+            List<UsrUsuarioRol> rolesUsr = usrUsuarioRolRepository.findByIdRol(mapper.map(rol, UsrRol.class));
+            if (rolesUsr != null) {
+                for (UsrUsuarioRol ite : rolesUsr) {
                     UsrUsuarioDTO item;
-                    item = mapper.map(usu, UsrUsuarioDTO.class);
+                    item = mapper.map(ite.getUserId(), UsrUsuarioDTO.class);
                     item.setNombreCompleto(item.getNombres() + " " + item.getApellidos());
                     res.add(item);
                 }
+                return res;
             }
-            return res;
-        }
-        throw new NoContentException("No existen estudiantes en la base de datos");
-    }
-
-    @Override
-    public List<UsrUsuarioDTO> listarProfesores() {
-        List<UsrUsuario> usus = usuarioRepository.findAll();
-        List<UsrUsuarioDTO> res = new ArrayList<>();
-        if (!usus.isEmpty()) {
-            for (UsrUsuario usu : usus) {
-                if (usu.getRol().equals("Profesor")) {
-                    UsrUsuarioDTO item;
-                    item = mapper.map(usu, UsrUsuarioDTO.class);
-                    item.setNombreCompleto(item.getNombres() + " " + item.getApellidos());
-                    res.add(item);
-                }
-            }
-            return res;
         }
         throw new NoContentException("No existen profesores en la base de datos, por favor cree uno");
     }
+
 
 }

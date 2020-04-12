@@ -6,6 +6,9 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
 import { UserService } from '../services/user.service';
 import { delay } from 'rxjs/operators';
+import { RoleGuardService } from '../guard/role-guard.service';
+import decode from 'jwt-decode';
+
 
 @Component({
   selector: 'app-login',
@@ -21,7 +24,8 @@ export class LoginComponent implements OnInit {
     private messageService: MessageService,
     public router: Router,
     private authenticationService: AuthenticationService,
-    private userService: UserService) { }
+    private userService: UserService,
+    private roleGuardService: RoleGuardService) { }
 
   ngOnInit() {
     sessionStorage.clear();
@@ -73,19 +77,25 @@ export class LoginComponent implements OnInit {
       .subscribe(
         result => {
           if (result) {
-            console.log(result)
             this.userService.SavesessionStorage(result.access_token, result.refresh_token);
             this.loginService.consultarUsr(this.loginAccess.username).subscribe(res => {
-              console.log(res)
+
               if (res != null) {
                 res.contrasena = ''
                 res.roles = []
                 sessionStorage.setItem("usuario", JSON.stringify(res))
                 this.navigateAfterSuccess();
+                const token = sessionStorage.getItem("access_token");
+                const tokenPayload = decode(token);
+                if (this.roleGuardService.validarRol(tokenPayload.authorities, ["Estudiante"]) == true) {
+                  this.navigateVerNotas();
+                }
+                if (this.roleGuardService.validarRol(tokenPayload.authorities, ["Profesor", "Administrador"]) == true) {
+                  this.navigateAfterSuccess();
+                }
               }
             })
           } else {
-            console.log("contraseña incorrecta")
             /* this.IsWait = false;
             this.openSnackBar("El nombre de ususario o contraseña estan incorrectos", "!Cuidado¡"); */
           }

@@ -28,8 +28,7 @@ public interface UsrUsuarioService {
 
     List<UsrUsuarioDTO> listarTodos();
 
-    List<UsrUsuarioDTO> listarEstudiantes();
-
-    List<UsrUsuarioDTO> listarProfesores();
+    List<UsrUsuarioDTO> buscarUsuarosPorRol(String role);
+    
 
 }

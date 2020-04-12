@@ -6,14 +6,21 @@
 
 
 <div>
-    <p-table [value]="usuariosList">
+    <p-table #dt [value]="usuariosList" [lazy]="false" [paginator]="true" [rows]="10">
+        <ng-template pTemplate="caption">
+            <div style="text-align: right">
+                <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+                <input type="text" pInputText size="50" placeholder="Buscar estudiante..."
+                    (input)="dt.filterGlobal($event.target.apellidos, 'contains')" style="width:auto">
+            </div>
+        </ng-template>
         <ng-template pTemplate="header">
             <tr>
                 <th>Nombres</th>
                 <th>Apellidos</th>
                 <th>Nombre usuario</th>
                 <th>Correo</th>
-                <th>Rol</th>
+                <!--                <th>Rol</th> -->
                 <th>Acciones</th>
             </tr>
         </ng-template>
@@ -23,10 +30,10 @@
                 <td (click)="editar(car)">{{car.apellidos}}</td>
                 <td (click)="editar(car)">{{car.nombreUsuario}}</td>
                 <td (click)="editar(car)">{{car.correo}}</td>
-                <td (click)="editar(car)">{{car.rol}}</td>
+                <!--                 <td (click)="editar(car)">{{car.roles}}</td> -->
                 <td style="text-align: center;">
                     <button pButton type="button" icon="pi pi-trash" class="ui-button-danger"
-                    (click)="confirmar(car)"></button>
+                        (click)="confirmar(car)"></button>
                 </td>
 
             </tr>
@@ -34,56 +41,58 @@
     </p-table>
 </div>
 
-
 <p-dialog header="Crear usuario" [(visible)]="display" [modal]="true" [style]="{width: '400px'}" [baseZIndex]="10000"
     [draggable]="false" [resizable]="false">
     <p-toast class="toast"></p-toast>
     <div class="p-grid">
         <div class="p-col">
             <span class="ui-float-label">
-                <input id="float-input" type="text" size="30" pInputText [(ngModel)]="guardarUsuario.nombres">
+                <input id="float-input" type="text" size="30" pInputText [(ngModel)]="guardarUsuario.usuario.nombres">
                 <label for="float-input">Nombres</label>
             </span>
         </div>
         <div class="p-col">
             <span class="ui-float-label">
-                <input id="float-input" type="text" size="30" pInputText [(ngModel)]="guardarUsuario.apellidos">
+                <input id="float-input" type="text" size="30" pInputText [(ngModel)]="guardarUsuario.usuario.apellidos">
                 <label for="float-input">Apellidos</label>
             </span>
         </div>
         <div class="p-col">
             <span class="ui-float-label">
-                <input id="float-input" type="text" size="30" pInputText [(ngModel)]="guardarUsuario.nombreUsuario">
+                <input id="float-input" type="text" size="30" pInputText
+                    [(ngModel)]="guardarUsuario.usuario.nombreUsuario">
                 <label for="float-input">Nombre usuarios</label>
             </span>
         </div>
         <div class="p-col">
             <span class="ui-float-label">
-                <input id="float-input" type="text" size="30" pInputText [(ngModel)]="guardarUsuario.contrasena">
+                <input id="float-input" type="text" size="30" pInputText
+                    [(ngModel)]="guardarUsuario.usuario.contrasena">
                 <label for="float-input">Contraseña</label>
             </span>
         </div>
 
         <div class="p-col">
             <span class="ui-float-label">
-                <input id="float-input" type="text" size="30" pInputText [(ngModel)]="guardarUsuario.correo">
+                <input id="float-input" type="text" size="30" pInputText [(ngModel)]="guardarUsuario.usuario.correo">
                 <label for="float-input">Correo</label>
             </span>
         </div>
 
         <div class="p-col">
             <span class="ui-float-label">
-                <p-dropdown [style]="{width: '100%'}" [options]="generos" [(ngModel)]="selectGenero" optionLabel="genero" placeholder=" ">
+                <p-dropdown [style]="{width: '100%'}" [options]="generos" [(ngModel)]="selectGenero"
+                    optionLabel="genero" placeholder=" ">
                 </p-dropdown>
                 <label for="float-input">Genero</label>
             </span>
         </div>
 
         <div class="p-col">
-            <span class="ui-float-label">
-                <p-dropdown [style]="{width: '100%'}" [options]="roles" [(ngModel)]="selectRol" optionLabel="genero" placeholder=" "></p-dropdown>
-                <label for="float-input">Rol</label>
-            </span>
+            <p-multiSelect [style]="{width: '100%'}" [options]="rolesList" [(ngModel)]="rolesListModel"
+                optionLabel="nombre" [defaultLabel]="'Seleccione roles'">
+            </p-multiSelect>
+
         </div>
 
     </div>

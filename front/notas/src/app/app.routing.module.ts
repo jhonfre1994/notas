@@ -10,6 +10,7 @@ import { RegistrarNotasComponent } from './registrar-notas/registrar-notas.compo
 import { AuthService } from './guard/auth.service';
 import { ReporteEstudianteComponent } from './reporte-estudiante/reporte-estudiante.component';
 import { NotaEstudianteComponent } from './nota-estudiante/nota-estudiante.component';
+import { RoleGuardService } from './guard/role-guard.service';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -18,16 +19,58 @@ const routes: Routes = [
 
   {
     path: '',
-    component: MenuComponent,
-    canActivate: [AuthService],
+    component: MenuComponent,/* 
+    canActivate: [AuthService], */
     children: [
-      { path: 'usuarios', component: UsuariosComponent },
-      { path: 'cursos', component: CursosComponent },
-      { path: 'cursoEstudiante', component: CursoEstudianteComponent },
-      { path: 'actividades', component: ActividadesComponent },
-      { path: 'registrarNotas', component: RegistrarNotasComponent },
-      { path: 'reporteEstudiante', component: ReporteEstudianteComponent },
-      { path: 'notasEstudiante', component: NotaEstudianteComponent },
+      {
+        path: 'usuarios', component: UsuariosComponent,
+        canActivate: [RoleGuardService],
+        data: {
+          expectedRole: ["Profesor", "Administrativo"]
+        }
+      },
+      {
+        path: 'cursos', component: CursosComponent,
+        canActivate: [RoleGuardService],
+        data: {
+          expectedRole: ["Profesor", "Administrativo"]
+        }
+      },
+      {
+        path: 'cursoEstudiante', component: CursoEstudianteComponent,
+        canActivate: [RoleGuardService],
+        data: {
+          expectedRole: ["Profesor", "Administrativo"]
+        }
+      },
+      {
+        path: 'actividades', component: ActividadesComponent,
+        canActivate: [RoleGuardService],
+        data: {
+          expectedRole: ["Profesor", "Administrativo"]
+        }
+      },
+      {
+        path: 'registrarNotas', component: RegistrarNotasComponent,
+        canActivate: [RoleGuardService],
+        data: {
+          expectedRole: ["Profesor", "Administrativo"]
+        }
+      },
+      {
+        path: 'reporteEstudiante', component: ReporteEstudianteComponent,
+        canActivate: [RoleGuardService],
+        data: {
+          expectedRole: ["Profesor", "Administrativo"]
+        }
+      },
+      {
+        path: 'notasEstudiante', component: NotaEstudianteComponent,
+        canActivate: [RoleGuardService],
+        data: {
+          expectedRole: ["Estudiante"]
+        }
+      },
 
 
 

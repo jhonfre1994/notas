@@ -36,7 +36,6 @@ export class ActividadesComponent implements OnInit {
     this.cursosService.listarCursosPorfesor(IdProfesor).subscribe(res => {
       if (res != null) {
         this.cursosList = res
-        console.log(res)
       }
     })
   }
@@ -60,7 +59,6 @@ export class ActividadesComponent implements OnInit {
 
   guardar() {
     this.guardarActividad.idCurso = this.cursoSelected
-    console.log(this.guardarActividad)
     if (this.comprobarParametros() == true) {
       this.actividadesService.guardarActividad(this.guardarActividad).subscribe(res => {
         if (res != null) {
@@ -83,7 +81,6 @@ export class ActividadesComponent implements OnInit {
     this.actividadesList =[]
     this.actividadesService.actividadesPorCurso(idCurso).subscribe(res => {
       if (res != null) {
-        console.log(res)
         this.actividadesList = res
       }
     },

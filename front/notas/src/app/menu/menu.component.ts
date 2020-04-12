@@ -2,6 +2,8 @@ import { Component, OnInit, AfterViewInit, Version } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd, ChildActivationStart } from '@angular/router';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { SelectItem, MenuItem } from 'primeng/api';
+import decode from 'jwt-decode';
+import { RoleGuardService } from '../guard/role-guard.service';
 
 export class Veriones {
   valor: number;
@@ -17,16 +19,20 @@ export class MenuComponent implements OnInit, AfterViewInit {
 
   items: MenuItem[];
 
-  constructor(public router: Router, private _route: ActivatedRoute) {
+  constructor(public router: Router, private _route: ActivatedRoute,
+    private roleGuardService: RoleGuardService) {
   }
 
   ngOnInit() {
     let responsable = JSON.parse(sessionStorage.getItem("usuario"))
+    const token = sessionStorage.getItem("access_token");
+    const tokenPayload = decode(token);
+
     this.items = [
       {
         label: 'Opciones',
         icon: 'pi pi-fw pi-pencil',
-        visible: responsable.rol === 'Estudiante' ? false : true,
+        visible: this.roleGuardService.validarRol(tokenPayload.authorities, ["Profesor", "Administrador"]),
         items: [
           {
             label: 'Registrar notas', icon: 'pi pi-fw pi-chart-line',
@@ -45,7 +51,7 @@ export class MenuComponent implements OnInit, AfterViewInit {
       {
         label: 'Configuración',
         icon: 'pi pi-fw pi-cog',
-        visible: responsable.rol === 'Estudiante' ? false : true,
+        visible: this.roleGuardService.validarRol(tokenPayload.authorities, ["Profesor", "Administrador"]),
         items: [
           {
             label: 'Usuarios', icon: 'pi pi-users',
@@ -76,7 +82,7 @@ export class MenuComponent implements OnInit, AfterViewInit {
       {
         label: 'Portal',
         icon: 'pi pi-fw pi-pencil',
-        visible: responsable.rol === 'Profesor' ? false : true,
+        visible: this.roleGuardService.validarRol(tokenPayload.authorities, ["Estudiante"]),
         items: [
           {
             label: 'Ver notas', icon: 'pi pi-fw pi-chart-line',

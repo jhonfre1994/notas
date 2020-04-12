@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { UsuariosService } from './usuarios.service';
 import { usuarioDTO } from '../dto/usuarioDTO';
 import { SelectItem, MessageService, ConfirmationService } from "primeng/api";
+import { UsuarioSaveDTO } from '../dto/UsuarioSaveDTO';
+import { RolDTO } from '../dto/RolDTO';
 
 export class DropDown {
   public genero: string
@@ -16,7 +18,10 @@ export class DropDown {
 export class UsuariosComponent implements OnInit {
   display: boolean = false;
   public usuariosList: Array<usuarioDTO> = new Array<usuarioDTO>();
-  public guardarUsuario: usuarioDTO = new usuarioDTO();
+  public rolesList: Array<RolDTO> = new Array<RolDTO>();
+  public rolesListModel: Array<RolDTO> = new Array<RolDTO>();
+  public guardarUsuario: UsuarioSaveDTO = new UsuarioSaveDTO();
+  public guardarUsuarioForm: usuarioDTO = new usuarioDTO();
   selectGenero: DropDown = new DropDown()
   generos: Array<DropDown> = new Array<DropDown>();
 
@@ -41,6 +46,7 @@ export class UsuariosComponent implements OnInit {
 
   ngOnInit() {
     this.listarTodos()
+    this.listarRoles()
   }
 
   confirmar(usuario: usuarioDTO) {
@@ -55,7 +61,6 @@ export class UsuariosComponent implements OnInit {
   listarTodos() {
     this.usuariosService.listarUsuarios().subscribe(res => {
       if (res != null) {
-        console.log(res)
         this.usuariosList = res;
       }
     },
@@ -64,37 +69,45 @@ export class UsuariosComponent implements OnInit {
       })
   }
 
+  listarRoles() {
+    this.usuariosService.listarRoles().subscribe(res => {
+      if (res != null) {
+        this.rolesList = res
+      }
+    })
+  }
+
   public showToast(tipo: string, resumen: string, detalle: string): void {
     this.messageService.add({ severity: tipo, summary: resumen, detail: detalle })
   }
 
 
   public comprobarParametros(): boolean {
-    if (this.guardarUsuario.nombres == null) {
+    if (this.guardarUsuario.usuario.nombres == null) {
       this.showToast("error", "Error de Atributos", "El nombre no puede estar vació");
       return false;
     }
-    if (this.guardarUsuario.apellidos == null) {
+    if (this.guardarUsuario.usuario.apellidos == null) {
       this.showToast("error", "Error de Atributos", "El apellido no puede estar vació");
       return false;
     }
-    if (this.guardarUsuario.nombreUsuario == null) {
+    if (this.guardarUsuario.usuario.nombreUsuario == null) {
       this.showToast("error", "Error de Atributos", "El nombre usuario no puede estar vació");
       return false;
     }
-    if (this.guardarUsuario.contrasena == null) {
+    if (this.guardarUsuario.usuario.contrasena == null) {
       this.showToast("error", "Error de Atributos", "La Contraseña no puede estar vació");
       return false;
     }
-    if (this.guardarUsuario.rol == null) {
+    /* if (this.guardarUsuario.usuariorol == null) {
       this.showToast("error", "Error de Atributos", "El rol no puede estar vació");
       return false;
-    }
-    if (this.guardarUsuario.correo == null) {
+    } */
+    if (this.guardarUsuario.usuario.correo == null) {
       this.showToast("error", "Error de Atributos", "El correo no puede estar vació");
       return false;
     }
-    if (this.guardarUsuario.genero == null) {
+    if (this.guardarUsuario.usuario.genero == null) {
       this.showToast("error", "Error de Atributos", "El genero no puede estar vació");
       return false;
     }
@@ -103,32 +116,31 @@ export class UsuariosComponent implements OnInit {
 
 
   guardar() {
-    this.guardarUsuario.genero = this.selectGenero.genero
-    this.guardarUsuario.rol = this.selectRol.genero
-    if (this.guardarUsuario.idUsuario != 0) {
-      this.guardarUsuario.idUsuario = this.guardarUsuario.idUsuario
+    this.guardarUsuario.usuario.genero = this.selectGenero.genero
+    //this.guardarUsuario.rol = this.selectRol.genero
+    this.guardarUsuario.roles = this.rolesListModel
+    if (this.guardarUsuario.usuario.idUsuario != 0) {
+      this.guardarUsuario.usuario.idUsuario = this.guardarUsuario.usuario.idUsuario
     } else {
-      this.guardarUsuario.idUsuario = 0
+      this.guardarUsuario.usuario.idUsuario = 0
     }
 
     if (this.comprobarParametros() == true) {
-      console.log(this.guardarUsuario)
       this.usuariosService.guardarUsuario(this.guardarUsuario).subscribe(res => {
         if (res != null) {
           this.display = false;
-          console.log(res)
           this.listarTodos()
           /* this.guardarUsuario = res */
           this.showToast("success", "Bien", "Usuario guardado correctamente");
         }
         delete this.guardarUsuario
-        this.guardarUsuario = new usuarioDTO();
+        this.guardarUsuario = new UsuarioSaveDTO();
       })
     }
   }
 
   editar(usu: usuarioDTO) {
-    console.log(usu)
+    this.rolesListModel = []
     this.generos.forEach(element => {
       if (element.genero == usu.genero) {
         this.selectGenero = element
@@ -140,19 +152,20 @@ export class UsuariosComponent implements OnInit {
         this.selectRol = element
       }
     });
-
-    this.guardarUsuario = usu
+    usu.roles.map((item) => this.rolesListModel.push(item));
+    usu.contrasena = ''
+    this.guardarUsuario.usuario = usu
     this.display = true
   }
 
   limpiarCampos() {
     delete this.guardarUsuario
-    this.guardarUsuario = new usuarioDTO
+    this.guardarUsuario = new UsuarioSaveDTO
     delete this.selectGenero
     delete this.selectRol
     this.selectRol = new DropDown
     this.selectGenero = new DropDown
-
+    this.rolesListModel = [];
   }
 
   showDialog() {
@@ -163,7 +176,6 @@ export class UsuariosComponent implements OnInit {
   eliminarUsuario(usu: usuarioDTO) {
     this.usuariosService.eliminarUsuario(usu.idUsuario).subscribe(res => {
       if (res != null) {
-        console.log(res)
         this.showToast("success", "Bien", "Usuario eliminado correctamente");
         this.listarTodos()
       }

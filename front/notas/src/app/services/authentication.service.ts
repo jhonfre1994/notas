@@ -54,8 +54,6 @@ export class AuthenticationService {
       .pipe(map(res => res.json()))
 
       .subscribe(data => {
-        //console.log(data);
-        //console.log(data.refresh_token)
         localStorage.setItem("refresh_token", data.refresh_token);
         localStorage.setItem(environment.TOKEN_NAME, data.access_token);
 
@@ -70,8 +68,6 @@ export class AuthenticationService {
     }
     return this.http2.get(environment.gatewayServer + "user/me", header)
       .subscribe(res => {
-        /* console.log(res) */
-
       }
       )
   };

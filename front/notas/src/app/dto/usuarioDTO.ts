@@ -13,4 +13,5 @@ export class usuarioDTO{
     public rol : string;
     public nombreCompleto: string;
     public roles: Array<RolDTO>;
+
 }

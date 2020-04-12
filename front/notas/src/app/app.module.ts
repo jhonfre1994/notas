@@ -19,6 +19,9 @@ import { LocationStrategy, PathLocationStrategy, HashLocationStrategy } from '@a
 import { NotaEstudianteComponent } from './nota-estudiante/nota-estudiante.component';
 import { HttpModule } from '@angular/http';
 import { TokenInterceptor } from './interceptors/token.interceptor';
+import { RoleGuardService } from './guard/role-guard.service';
+import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
+import { tokenNotExpired } from 'angular2-jwt';
 
 @NgModule({
   declarations: [
@@ -42,12 +45,17 @@ import { TokenInterceptor } from './interceptors/token.interceptor';
     HttpModule
   ],
   providers: [AuthService,
+    RoleGuardService,
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
       multi: true
-    }
+    },
+    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+    JwtHelperService,
+    { provide: 'tokenNotExpired', useValue: tokenNotExpired }, 
+
 
 
   ],

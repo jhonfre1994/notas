@@ -34,7 +34,6 @@ export class CursosComponent implements OnInit {
     this.cursosService.listarCursos().subscribe(res => {
       if (res != null) {
         this.cursosList = res;
-        console.log(res)
       }
     },
     error =>{
@@ -46,7 +45,6 @@ export class CursosComponent implements OnInit {
   listarUsuarios() {
     this.usuariosService.listarProfesores().subscribe(res => {
       if (res != null) {
-        console.log(res)
         this.usuariosLis = res
       }
     })
@@ -92,7 +90,6 @@ export class CursosComponent implements OnInit {
         if (res != null) {
           this.display = false
           this.listarTodos();
-          console.log(res)
           this.showToast("success", "Bien", "Curso guardado correctamente");
 
         }
@@ -110,7 +107,6 @@ export class CursosComponent implements OnInit {
   }
 
   editar(curso: CursosDTO) {
-    console.log(curso)
     this.guardarCurso = curso
     this.display = true
 

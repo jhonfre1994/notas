@@ -42,7 +42,6 @@ export class RegistrarNotasComponent implements OnInit {
     this.cursosService.listarCursosPorfesor(IdProfesor).subscribe(res => {
       if (res != null) {
         this.cursosList = res
-        console.log(res)
       }
     })
   }
@@ -52,7 +51,6 @@ export class RegistrarNotasComponent implements OnInit {
     this.actividadesList = []
     this.actividadesService.actividadesPorCurso(idCurso).subscribe(res => {
       if (res != null) {
-        console.log(res)
         this.actividadesList = res
       }
     },
@@ -71,7 +69,6 @@ export class RegistrarNotasComponent implements OnInit {
       if (res != null) {
         this.notas = res;
       }
-      console.log(res)
     })
   }
 
@@ -81,7 +78,6 @@ export class RegistrarNotasComponent implements OnInit {
 
   guardarNotas(nota: RegistrarNotasDTO) {
     this.registrarNotasService.actualizarNota(nota).subscribe(res => {
-      console.log(res)
       if (res != null) {
         this.showToast("success", "Bien", "Nota guardada correctamente");
       }

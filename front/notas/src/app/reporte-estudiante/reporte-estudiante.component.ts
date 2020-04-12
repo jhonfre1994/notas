@@ -39,7 +39,6 @@ export class ReporteEstudianteComponent implements OnInit {
     this.cursosService.listarCursosPorfesor(IdProfesor).subscribe(res => {
       if (res != null) {
         this.cursosList = res
-        console.log(res)
       }
     })
   }
@@ -51,21 +50,19 @@ export class ReporteEstudianteComponent implements OnInit {
 
   estudiantesPorCurso(idCurso: number) {
     this.cursoEstudianteService.estudiantesCursos(idCurso).subscribe(res => {
-      console.log(res)
-      this.estudiantesCurso = res;
+      if (res != null) {
+        this.estudiantesCurso = res;
+      }
 
     })
   }
 
   generarReporte() {
     this.notasList = []
-    console.log(this.cursoSelected)
-    console.log(this.usuariosSelected)
     this.registrarNotasService.reporteNotas(this.usuariosSelected.idUsuario, this.cursoSelected.idCurso).subscribe(res => {
       if (res != null) {
         this.notasList = res
       }
-      console.log(res)
     })
   }
 

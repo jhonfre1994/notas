@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { SelectItem, MenuItem } from 'primeng/api';
 import decode from 'jwt-decode';
 import { RoleGuardService } from '../guard/role-guard.service';
+import { usuarioDTO } from '../dto/usuarioDTO';
 
 export class Veriones {
   valor: number;
@@ -18,16 +19,25 @@ export class Veriones {
 export class MenuComponent implements OnInit, AfterViewInit {
 
   items: MenuItem[];
-
+  mostrarmenu: boolean = false;
+  nombeUsuario: string;
+  bienvenido : string;
   constructor(public router: Router, private _route: ActivatedRoute,
     private roleGuardService: RoleGuardService) {
   }
 
   ngOnInit() {
-    let responsable = JSON.parse(sessionStorage.getItem("usuario"))
+    let responsable = new usuarioDTO()
+    responsable = JSON.parse(sessionStorage.getItem("usuario"))
+    this.nombeUsuario = responsable.nombres + " " + responsable.apellidos
     const token = sessionStorage.getItem("access_token");
     const tokenPayload = decode(token);
-
+    debugger
+    if(responsable.genero === 'M'){
+      this.bienvenido = "Bienvenido"
+    }else{
+      this.bienvenido = "Bienvenida"
+    }
     this.items = [
       {
         label: 'Opciones',
@@ -93,6 +103,7 @@ export class MenuComponent implements OnInit, AfterViewInit {
         ]
       },
     ];
+
   }
 
   ngAfterViewInit() {
@@ -100,34 +111,53 @@ export class MenuComponent implements OnInit, AfterViewInit {
 
   enviarUsuarios() {
     this.router.navigate(['usuarios'])
+    this.mostrarmenu = false;
+
   }
 
   enviarCursos() {
     this.router.navigate(['cursos'])
+    this.mostrarmenu = false;
+
   }
 
   enviarCursoEstudiantes() {
     this.router.navigate(['cursoEstudiante'])
+    this.mostrarmenu = false;
+
   }
 
   cerrarSesion() {
     this.router.navigate(['login'])
+    this.mostrarmenu = false;
+
   }
 
 
   enviarActividades() {
     this.router.navigate(['actividades'])
+    this.mostrarmenu = false;
+
   }
 
   enviarRegistrarNotas() {
     this.router.navigate(['registrarNotas'])
+    this.mostrarmenu = false;
+
   }
 
   notasEstudiante() {
     this.router.navigate(['notasEstudiante'])
+    this.mostrarmenu = false;
+
   }
 
   enviarReporte() {
     this.router.navigate(['reporteEstudiante'])
+    this.mostrarmenu = false;
+  }
+
+  mostrarmenus(): boolean {
+    return this.mostrarmenu = true;
   }
 }

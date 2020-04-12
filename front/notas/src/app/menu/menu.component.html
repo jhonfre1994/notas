@@ -1,8 +1,8 @@
-<p-sidebar [(visible)]="display">
-    <p-card [style]="{width: '250px'}" styleClass="ui-card-shadow">
-        <h3>Usuario en sesión</h3>
-        <h3>{{nombreUsuario}}</h3>
-    </p-card>
+<p-sidebar [(visible)]="mostrarmenu">
+    <div style="text-align: center;">
+        <h3>{{bienvenido}}</h3>
+        <h3>{{nombeUsuario}}</h3>
+    </div>
     <p-panelMenu [model]="items" [style]="{'width':'250px'}"></p-panelMenu>
 
     <div style="margin-top: 20px;">
@@ -13,7 +13,7 @@
 
 <p-toolbar>
     <div class="ui-toolbar-group-left">
-        <button pButton type="button" style="width: 150px;" (click)="display = true" label="Menú"
+        <button pButton type="button" style="width: 150px;" (click)="mostrarmenus()" label="Menú"
             icon="pi pi-id-card"></button>
         <!-- <i class="pi pi-angle-right"></i> -->
         <!-- <button pButton type="button" label="Imprimir" icon="pi pi-print" (click)="prueba($event)"

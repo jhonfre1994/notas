@@ -10,7 +10,7 @@
         <ng-template pTemplate="caption">
             <div style="text-align: right">
                 <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
-                <input type="text" pInputText size="50" placeholder="Buscar usuario..."
+                <input type="text" pInputText  placeholder="Buscar usuario..."
                     (input)="dd.filterGlobal($event.target.value, 'contains')" style="width:auto">
             </div>
         </ng-template>
@@ -18,8 +18,8 @@
             <tr>
                 <th>Nombres</th>
                 <th>Apellidos</th>
-                <th>Nombre usuario</th>
-                <th>Correo</th>
+                <th class="ui-p-5">Nombre usuario</th>
+                <th class="ui-p-6">Correo</th>
                 <!--                <th>Rol</th> -->
                 <th>Acciones</th>
             </tr>
@@ -28,8 +28,8 @@
             <tr>
                 <td (click)="editar(car)">{{car.nombres}}</td>
                 <td (click)="editar(car)">{{car.apellidos}}</td>
-                <td (click)="editar(car)">{{car.nombreUsuario}}</td>
-                <td (click)="editar(car)">{{car.correo}}</td>
+                <td (click)="editar(car)" class="ui-p-5">{{car.nombreUsuario}}</td>
+                <td (click)="editar(car)" class="ui-p-6">{{car.correo}}</td>
                 <!--                 <td (click)="editar(car)">{{car.roles}}</td> -->
                 <td style="text-align: center;">
                     <button pButton type="button" icon="pi pi-trash" class="ui-button-danger"

@@ -46,13 +46,11 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 //                .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
 
         http.authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/api/v.1/**").authenticated()
-                .antMatchers(HttpMethod.GET, "/api/v.1/**").authenticated()
-                .antMatchers(HttpMethod.POST, "/api/v.1/usuarios/consularPorUsuario/**").permitAll()
-                .antMatchers(HttpMethod.PUT, "/api/v.1/**").authenticated()
-                .antMatchers(HttpMethod.DELETE, "/api/v.1/**").authenticated()
-                .and()
-                .cors().and().csrf().disable();
+                .antMatchers(HttpMethod.GET, "/").permitAll()
+                .antMatchers(HttpMethod.POST, "/").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/").permitAll()
+                .antMatchers(HttpMethod.OPTIONS, "/").permitAll();
+
     }
 
     @Bean

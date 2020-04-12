@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  //gatewayServer: 'http://10.128.0.5:8081/',
+  //gatewayServer: 'http://localhost:8081/',
   TOKEN_AUTH_USERNAME : 'R2dpxQ3vPrtfgF72',
   TOKEN_AUTH_PASSWORD : 'fDw7Mpkk5czHNuSRtmhGmAGL42CaxQB9',
   TOKEN_NAME : 'access_token',

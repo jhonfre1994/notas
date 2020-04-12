@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/api/v.1/usuarios")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*", allowedHeaders = "*", maxAge = 4800, allowCredentials = "false")
 public class UsuariosController {
 
     @Autowired
@@ -39,21 +39,21 @@ public class UsuariosController {
     }
 
     @GetMapping()
-    @PreAuthorize("hasAuthority('Profesor') or hasAuthority('Administrador')")
+//    @PreAuthorize("hasAuthority('Profesor') or hasAuthority('Administrador')")
     public ResponseEntity<?> listarTodos() {
         List<UsrUsuarioDTO> res = usuarioService.listarTodos();
         return ResponseEntity.ok(res);
     }
 
     @GetMapping("listarEstudiantes")
-    @PreAuthorize("hasAuthority('Profesor') or hasAuthority('Administrador')")
+//    @PreAuthorize("hasAuthority('Profesor') or hasAuthority('Administrador')")
     public ResponseEntity<?> listarEstudiantes() {
         List<UsrUsuarioDTO> res = usuarioService.buscarUsuarosPorRol("Estudiante");
         return ResponseEntity.ok(res);
     }
 
     @GetMapping("listarProfesores")
-    @PreAuthorize("hasAuthority('Profesor') or hasAuthority('Administrador')")
+//    @PreAuthorize("hasAuthority('Profesor') or hasAuthority('Administrador')")
     public ResponseEntity<?> listarProfesores() {
         List<UsrUsuarioDTO> res = usuarioService.buscarUsuarosPorRol("Profesor");
         return ResponseEntity.ok(res);
@@ -70,7 +70,7 @@ public class UsuariosController {
     }
 
     @GetMapping("consularPorId/{id}")
-    @PreAuthorize("hasAuthority('Profesor') or hasAuthority('Administrador')")
+//    @PreAuthorize("hasAuthority('Profesor') or hasAuthority('Administrador')")
     public ResponseEntity<?> consultaPorUsuario(@PathVariable("id") Integer id) {
         UsrUsuarioDTO res = usuarioService.consultarUsuario(id);
 
@@ -81,7 +81,7 @@ public class UsuariosController {
     }
 
     @DeleteMapping("eliminarUsuario/{id}")
-    @PreAuthorize("hasAuthority('Profesor') or hasAuthority('Administrador')")
+//    @PreAuthorize("hasAuthority('Profesor') or hasAuthority('Administrador')")
     public ResponseEntity<?> eliminarUsuario(@PathVariable("id") Integer id) {
         UsrUsuarioDTO res = usuarioService.eliminarUsuario(id);
         if (res != null) {
@@ -91,7 +91,7 @@ public class UsuariosController {
     }
 
     @PostMapping("guardarUsuario")
-    @PreAuthorize("hasAuthority('Profesor') or hasAuthority('Administrador')")
+//    @PreAuthorize("hasAuthority('Profesor') or hasAuthority('Administrador')")
     public ResponseEntity<?> guardarUsuario(@RequestBody UsuarioSaveDTO usuario) {
         UsuarioSaveDTO res = usuarioService.guardarUsuario(usuario);
         if (res != null) {
@@ -101,7 +101,7 @@ public class UsuariosController {
     }
 
     @PostMapping("login")
-    @PreAuthorize("hasAuthority('Profesor') or hasAuthority('Administrador')")
+//    @PreAuthorize("hasAuthority('Profesor') or hasAuthority('Administrador')")
     public ResponseEntity<?> inisiarSesion(@RequestBody login login) {
         UsrUsuarioDTO res = usuarioService.iniciarSesion(login);
 

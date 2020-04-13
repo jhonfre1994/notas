@@ -21,7 +21,7 @@ export class MenuComponent implements OnInit, AfterViewInit {
   items: MenuItem[];
   mostrarmenu: boolean = false;
   nombeUsuario: string;
-  bienvenido : string;
+  bienvenido: string;
   constructor(public router: Router, private _route: ActivatedRoute,
     private roleGuardService: RoleGuardService) {
   }
@@ -32,9 +32,9 @@ export class MenuComponent implements OnInit, AfterViewInit {
     this.nombeUsuario = responsable.nombres + " " + responsable.apellidos
     const token = sessionStorage.getItem("access_token");
     const tokenPayload = decode(token);
-    if(responsable.genero === 'M'){
+    if (responsable.genero === 'M') {
       this.bienvenido = "Bienvenido"
-    }else{
+    } else {
       this.bienvenido = "Bienvenida"
     }
     this.items = [
@@ -77,6 +77,12 @@ export class MenuComponent implements OnInit, AfterViewInit {
             label: 'Asignar estudiantes', icon: 'pi pi-user-plus',
             command: (event) => {
               this.enviarCursoEstudiantes()
+            },
+          },
+          {
+            label: 'Materias', icon: 'pi pi-user-plus',
+            command: (event) => {
+              this.enviarMaterias()
             },
           },
           {
@@ -135,6 +141,13 @@ export class MenuComponent implements OnInit, AfterViewInit {
 
   enviarActividades() {
     this.router.navigate(['actividades'])
+    this.mostrarmenu = false;
+
+  }
+
+
+  enviarMaterias() {
+    this.router.navigate(['materias'])
     this.mostrarmenu = false;
 
   }

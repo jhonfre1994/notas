@@ -5,7 +5,6 @@
  */
 package com.notas.dto;
 
-import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,14 +16,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CursoDTO {
+public class MateriaDTO {
     
-    private Integer idCurso;
-    private String nombreCurso;
-    private String codigo;
-    private UsrUsuarioDTO idProfesor;
-    private String responsable;
-    private String jornada;
-//    private List<CursoEstudianteDTO> cursoEstudianteList;
-//    private List<ActividadDTO> actividadList;
+    private Integer idMateria;
+    private String nombre;
+    private String abreviatura;
+    private UsrUsuarioDTO profesor;
+    private CursoDTO idCurso;
 }

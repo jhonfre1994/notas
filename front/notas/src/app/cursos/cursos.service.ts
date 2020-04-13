@@ -31,4 +31,8 @@ export class CursosService {
   public eliminarCurso(curso: number): Observable<CursosDTO> {
     return this.http.delete<CursosDTO>(environment.gatewayServer + "api/v.1/cursos/eliminarCurso/" + curso)
   }
+
+  public listarCursosJornada(jornada: string): Observable<CursosDTO[]> {
+    return this.http.get<CursosDTO[]>(environment.gatewayServer + "api/v.1/cursos/cursosJornada/"+jornada)
+  }
 }

@@ -6,6 +6,7 @@ import { UsuariosService } from '../usuarios/usuarios.service';
 import { CursoEstudianteService } from './curso-estudiante.service';
 import { SaveCursoEstudiante } from '../dto/SaveCursoEstudiante';
 import { SelectItem, MessageService, ConfirmationService } from "primeng/api";
+import { DropDown } from '../usuarios/usuarios.component';
 
 
 @Component({
@@ -20,8 +21,8 @@ export class CursoEstudianteComponent implements OnInit {
   usuariosList: Array<usuarioDTO> = new Array<usuarioDTO>();
   cursoSelected: CursosDTO = new CursosDTO();
   usuariosSelected: Array<usuarioDTO> = new Array<usuarioDTO>();
-
-
+  jornadas: Array<DropDown> = new Array<DropDown>();
+  selectJornada: DropDown = new DropDown()
   estudiantesCurso: Array<usuarioDTO> = new Array<usuarioDTO>();
 
   guardarDatos: SaveCursoEstudiante = new SaveCursoEstudiante();
@@ -30,11 +31,18 @@ export class CursoEstudianteComponent implements OnInit {
     private usuariosService: UsuariosService,
     private cursoEstudianteService: CursoEstudianteService,
     private messageService: MessageService,
-    private confirmationService: ConfirmationService) { }
+    private confirmationService: ConfirmationService) {
+
+    this.jornadas = [
+      { genero: 'Mañana' },
+      { genero: 'Tarde' },
+      { genero: 'Noche' },
+      { genero: 'Sabatina' }
+    ]
+  }
 
   ngOnInit() {
     let usr = JSON.parse(sessionStorage.getItem("usuario"))
-    this.listarCursos(usr.idUsuario)
     this.listarUsuarios();
   }
 
@@ -46,11 +54,29 @@ export class CursoEstudianteComponent implements OnInit {
     })
   }
 
+  listarCursosJornada(jornada: string) {
+    this.cursosList = []
+    this.estudiantesCurso = []
+    this.cursosService.listarCursosJornada(jornada).subscribe(res => {
+      if (res != null) {
+        console.log(res)
+        this.cursosList = res;
+      }
+    },
+      error => {
+        this.showToast("error", "", error.error.message);
+      })
+  }
+
   public showToast(tipo: string, resumen: string, detalle: string): void {
     this.messageService.add({ severity: tipo, summary: resumen, detail: detalle })
   }
 
   public comprobarParametros(): boolean {
+    if (this.selectJornada == null) {
+      this.showToast("error", "Error de Atributos", "Debe seleccionar una jornada");
+      return false;
+    }
     if (this.guardarDatos.curso.idCurso == null) {
       this.showToast("error", "Error de Atributos", "Debe seleccionar un curso");
       return false;
@@ -72,6 +98,7 @@ export class CursoEstudianteComponent implements OnInit {
           delete this.guardarDatos
           this.guardarDatos = new SaveCursoEstudiante()
           this.estudiantesPorCurso(this.cursoSelected.idCurso)
+          this.usuariosSelected = []
         }
       })
     }
@@ -86,7 +113,7 @@ export class CursoEstudianteComponent implements OnInit {
   }
 
   dropDownCurso($event) {
-    this.estudiantesCurso =[]
+    this.estudiantesCurso = []
     this.estudiantesPorCurso($event.value.idCurso)
   }
 
@@ -96,9 +123,9 @@ export class CursoEstudianteComponent implements OnInit {
         this.estudiantesCurso = res;
       }
     },
-    error =>{
-      this.showToast("error", "", error.error.message);
-    })
+      error => {
+        this.showToast("error", "", error.error.message);
+      })
   }
 
   confirmar(estudiante: usuarioDTO) {
@@ -110,14 +137,19 @@ export class CursoEstudianteComponent implements OnInit {
     });
   }
 
-  eliminar(estudiante: usuarioDTO){
-    this.cursoEstudianteService.eliminarEstudiantes(estudiante.idUsuario,this.cursoSelected.idCurso).
-    subscribe(res =>{
-      if(res != null){
-        this.estudiantesCurso =[]
-        this.estudiantesPorCurso(this.cursoSelected.idCurso)
-      }
-    })
+  eliminar(estudiante: usuarioDTO) {
+    this.cursoEstudianteService.eliminarEstudiantes(estudiante.idUsuario, this.cursoSelected.idCurso).
+      subscribe(res => {
+        if (res != null) {
+          this.estudiantesCurso = []
+          this.estudiantesPorCurso(this.cursoSelected.idCurso)
+        }
+      })
 
+  }
+
+  buscarCursos(selectJornada: DropDown) {
+    this.usuariosSelected = []
+    this.listarCursosJornada(selectJornada.genero)
   }
 }

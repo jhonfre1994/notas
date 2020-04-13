@@ -6,8 +6,7 @@
 package com.notas.entidades;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,13 +17,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -34,26 +35,28 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "nota_actividad")
-public class NotaActividad implements Serializable {
+@Table(name = "materia")
+public class Materia implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id_nota")
-    private Integer idNota;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "nota")
-    private BigDecimal nota;
-    @Column(name = "fecha_digitacion")
-    @Temporal(TemporalType.DATE)
-    private Date fechaDigitacion;
-    @JoinColumn(name = "id_actividad", referencedColumnName = "id_actividad")
+    @Column(name = "id_materia")
+    private Integer idMateria;
+    @Size(max = 255)
+    @Column(name = "nombre")
+    private String nombre;
+    @Size(max = 255)
+    @Column(name = "abreviatura")
+    private String abreviatura;
+    @JoinColumn(name = "id_curso", referencedColumnName = "id_curso")
     @ManyToOne
-    private Actividad idActividad;
-    @JoinColumn(name = "id_estudiante", referencedColumnName = "id_usuario")
+    private Curso idCurso;
+    @JoinColumn(name = "profesor", referencedColumnName = "id_usuario")
     @ManyToOne
-    private UsrUsuario idEstudiante;
+    private UsrUsuario profesor;
+    @OneToMany(mappedBy = "idMateria")
+    private List<Actividad> actividadList;
 
 }

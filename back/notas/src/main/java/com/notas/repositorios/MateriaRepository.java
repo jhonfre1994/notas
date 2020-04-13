@@ -5,9 +5,7 @@
  */
 package com.notas.repositorios;
 
-import com.notas.entidades.Curso;
-import com.notas.entidades.UsrUsuario;
-import java.util.List;
+import com.notas.entidades.Materia;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -16,10 +14,6 @@ import org.springframework.stereotype.Repository;
  * @author UTP
  */
 @Repository
-public interface CursoRepository extends JpaRepository<Curso, Integer> {
-
-    List<Curso> findByIdProfesor(UsrUsuario usuario);
-
-    List<Curso> findByJornada(String usuario);
-
+public interface MateriaRepository  extends JpaRepository<Materia, Integer>{
+    
 }

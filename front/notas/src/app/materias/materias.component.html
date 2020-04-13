@@ -1,0 +1,66 @@
+<p-confirmDialog header="Confirmación" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<p-toast class="toast"></p-toast>
+
+<div style="padding: 25px;">
+    <button pButton type="button" label="Crear materia" (click)="showDialog()"></button>
+</div>
+
+<div>
+    <p-table [value]="materias">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Nombre</th>
+                <th>Abreviatura</th>
+                <th>Profesor</th>
+                <th>Acciones</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-car>
+            <tr>
+                <td (click)="editar(car)">{{car.nombre}}</td>
+                <td (click)="editar(car)">{{car.abreviatura}}</td>
+                <td (click)="editar(car)">{{car.profesor.nombres}} {{car.profesor.apellidos}}</td>
+                <td style="text-align: center;">
+                    <button pButton type="button" icon="pi pi-trash" class="ui-button-danger"
+                        (click)="confirmar(car)"></button>
+                </td>
+
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+
+<p-dialog header="Crear materia" [(visible)]="display" [modal]="true" [style]="{width: '400px'}" [baseZIndex]="10000"
+    [draggable]="false" [resizable]="false">
+    <p-toast class="toast"></p-toast>
+    <div class="p-grid">
+        <div class="p-col">
+            <span class="ui-float-label">
+                <input id="float-input" type="text" size="30" pInputText [(ngModel)]="materiasGuardad.nombre">
+                <label for="float-input">Nombre materia</label>
+            </span>
+        </div>
+        <div class="p-col">
+            <span class="ui-float-label">
+                <input id="float-input" type="text" size="30" pInputText [(ngModel)]="materiasGuardad.abreviatura">
+                <label for="float-input">Abreviatura</label>
+            </span>
+        </div>
+        <div class="p-col">
+            <p-dropdown [style]="{width: '100%'}" [options]="usuariosLis" [(ngModel)]="selectedUsr"
+                optionLabel="nombreCompleto" placeholder="Responsable"></p-dropdown>
+        </div>
+        <div class="p-col">
+            <p-dropdown [style]="{width: '100%'}" [options]="cursosList" [(ngModel)]="selectedCruso"
+                optionLabel="nombreCurso" placeholder="Curso"></p-dropdown>
+        </div>
+
+    </div>
+    <p-footer>
+        <div style="text-align: center;">
+            <button pButton type="button" label="Guardar" class="ui-button-success" (click)="guardar()"></button>
+            <button pButton type="button" label="Cancelar" class="ui-button-danger" (click)="display=false"></button>
+        </div>
+    </p-footer>
+</p-dialog>

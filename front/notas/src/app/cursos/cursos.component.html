@@ -5,12 +5,12 @@
 <div class="ui-g">
     <div class="ui-g-12 ui-md-6 ui-lg-6">
         <div class="ui-g-12 ui-md-6 ui-lg-6">
-            <button [disabled]="mostrarBoton" pButton type="button" label="Crear Curso" (click)="showDialog()"></button>
-        </div>
-        <div class="ui-g-12 ui-md-6 ui-lg-6">
             <p-dropdown [style]="{width: '100%'}" [options]="jornadas" [(ngModel)]="selectJornada" optionLabel="genero"
                 placeholder="Jornada" (onChange)="buscarCursos(selectJornada)">
             </p-dropdown>
+        </div>
+        <div class="ui-g-12 ui-md-6 ui-lg-6">
+            <button [disabled]="mostrarBoton" pButton type="button" label="Crear Curso" (click)="showDialog()"></button>
         </div>
     </div>
     <div class="ui-g-12 ui-md-6 ui-lg-6">
@@ -64,8 +64,8 @@
                 optionLabel="nombreCompleto" placeholder="Responsable"></p-dropdown>
         </div>
         <div class="p-col">
-            <p-dropdown [style]="{width: '100%'}" [disabled]="guardarCurso.idCurso == null"  [options]="jornadas" [(ngModel)]="selectJornada2" optionLabel="genero"
-                placeholder="Jornada">
+            <p-dropdown [style]="{width: '100%'}" [disabled]="guardarCurso.idCurso == null" [options]="jornadas"
+                [(ngModel)]="selectJornada2" optionLabel="genero" placeholder="Jornada">
             </p-dropdown>
         </div>
 

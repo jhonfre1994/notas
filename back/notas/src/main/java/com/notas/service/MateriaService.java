@@ -13,11 +13,15 @@ import java.util.List;
  * @author UTP
  */
 public interface MateriaService {
+
     MateriaDTO buscarMateria(Integer id);
-    
+
     MateriaDTO guardarMateria(MateriaDTO materia);
-    
+
     MateriaDTO eliminarMateria(Integer id);
-    
+
     List<MateriaDTO> listarMaterias();
+
+    List<MateriaDTO> materiasPorCurso(Integer idCurso);
+
 }

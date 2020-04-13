@@ -5,6 +5,7 @@
  */
 package com.notas.service.impl;
 
+import com.notas.dto.CursoDTO;
 import com.notas.dto.CursoEstudianteDTO;
 import com.notas.dto.SaveCursoEstudianteDTO;
 import com.notas.dto.UsrUsuarioDTO;
@@ -17,6 +18,7 @@ import com.notas.repositorios.CursoEstudianteRepository;
 import com.notas.service.CursoEstudianteService;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -59,7 +61,7 @@ public class CursoEstudianteServiceimpl implements CursoEstudianteService {
 
     @Override
     public List<UsrUsuarioDTO> listaPorCurso(Integer id) {
-        
+
         List<CursoEstudiante> datos = cursoEstudianteRepository.cursosEstudiantes(id);
         List<UsrUsuarioDTO> res = new ArrayList<UsrUsuarioDTO>();
 
@@ -67,7 +69,7 @@ public class CursoEstudianteServiceimpl implements CursoEstudianteService {
             for (CursoEstudiante dato : datos) {
                 UsrUsuarioDTO item;
                 item = mapper.map(dato.getIdEstudiante(), UsrUsuarioDTO.class);
-                item.setNombreCompleto(dato.getIdEstudiante().getNombres() + " " 
+                item.setNombreCompleto(dato.getIdEstudiante().getNombres() + " "
                         + dato.getIdEstudiante().getApellidos());
                 res.add(item);
             }
@@ -102,6 +104,16 @@ public class CursoEstudianteServiceimpl implements CursoEstudianteService {
             return res2;
         }
         return null;
+    }
+
+    public CursoDTO buscarCurso(Integer id) {
+        Optional<CursoEstudiante> cu = cursoEstudianteRepository.findById(id);
+        CursoDTO res;
+        if (cu.isPresent()) {
+            res = mapper.map(cu.get().getIdCurso(), CursoDTO.class);
+            return res;
+        }
+        throw new BadRequestException("No se encontro el curso");
     }
 
 }

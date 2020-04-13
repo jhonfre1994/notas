@@ -23,4 +23,5 @@ public class MateriaDTO {
     private String abreviatura;
     private UsrUsuarioDTO profesor;
     private CursoDTO idCurso;
+    private String responsable; 
 }

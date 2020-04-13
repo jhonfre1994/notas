@@ -5,8 +5,11 @@
  */
 package com.notas.service.impl;
 
+import com.notas.dto.CursoDTO;
 import com.notas.dto.MateriaDTO;
+import com.notas.entidades.Curso;
 import com.notas.entidades.Materia;
+import com.notas.exceptions.responses.BadRequestException;
 import com.notas.repositorios.MateriaRepository;
 import com.notas.service.MateriaService;
 import java.util.ArrayList;
@@ -27,6 +30,9 @@ public class MateriaServiceImpl implements MateriaService {
 
     @Autowired
     private ModelMapper mapper;
+
+    @Autowired
+    private CursoEstudianteServiceimpl cursoEstudianteServiceimpl;
 
     @Override
     public MateriaDTO buscarMateria(Integer id) {
@@ -59,6 +65,24 @@ public class MateriaServiceImpl implements MateriaService {
             return res;
         }
         return null;
+    }
+
+    @Override
+    public List<MateriaDTO> materiasPorCurso(Integer idCurso) {
+        mapper.getConfiguration().setAmbiguityIgnored(true);
+        List<Materia> materias = materiaRepository.materiasCurso(idCurso);
+
+        if (!materias.isEmpty()) {
+            List<MateriaDTO> res = new ArrayList<>();
+            for (Materia materia : materias) {
+                MateriaDTO item;
+                item = mapper.map(materia, MateriaDTO.class);
+                item.setResponsable(item.getProfesor().getNombres() + " " + item.getProfesor().getApellidos());
+                res.add(item);
+            }
+            return res;
+        }
+        throw new BadRequestException("No se encontraro materias relacionadas con este curso");
     }
 
 }

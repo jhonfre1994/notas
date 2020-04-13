@@ -1,9 +1,24 @@
 <p-confirmDialog header="Confirmación" icon="pi pi-exclamation-triangle"></p-confirmDialog>
 <p-toast class="toast"></p-toast>
 
-<div style="padding: 25px;">
-    <button pButton type="button" label="Crear materia" (click)="showDialog()"></button>
-</div>
+<p-fieldset legend="Asociar estudiante">
+    <div class="ui-g">
+        <div class="ui-g-12 ui-md-6 ui-lg-4">
+            <p-dropdown [style]="{width: '100%'}" [options]="jornadas" [(ngModel)]="selectJornada" optionLabel="genero"
+                placeholder="Jornada" (onChange)="buscarCursos(selectJornada)">
+            </p-dropdown>
+        </div>
+        <div class="ui-g-12 ui-md-6 ui-lg-4">
+            <p-dropdown [style]="{width: '100%'}" [options]="cursosList" [(ngModel)]="cursoSelected"
+                optionLabel="nombreCurso" placeholder="Cursos" (onChange)="buscarMaterias(cursoSelected)"></p-dropdown>
+        </div>
+        <div class="ui-g-12 ui-md-6 ui-lg-4">
+            <button [disabled]="ocultarBoton" pButton type="button" label="Crear materia"
+                (click)="showDialog()"></button>
+        </div>
+    </div>
+</p-fieldset>
+
 
 <div>
     <p-table [value]="materias">
@@ -19,7 +34,7 @@
             <tr>
                 <td (click)="editar(car)">{{car.nombre}}</td>
                 <td (click)="editar(car)">{{car.abreviatura}}</td>
-                <td (click)="editar(car)">{{car.profesor.nombres}} {{car.profesor.apellidos}}</td>
+                <td (click)="editar(car)">{{car.responsable}}</td>
                 <td style="text-align: center;">
                     <button pButton type="button" icon="pi pi-trash" class="ui-button-danger"
                         (click)="confirmar(car)"></button>
@@ -52,8 +67,8 @@
                 optionLabel="nombreCompleto" placeholder="Responsable"></p-dropdown>
         </div>
         <div class="p-col">
-            <p-dropdown [style]="{width: '100%'}" [options]="cursosList" [(ngModel)]="selectedCruso"
-                optionLabel="nombreCurso" placeholder="Curso"></p-dropdown>
+            <p-dropdown [style]="{width: '100%'}" [options]="cursosList" [disabled]="materiasGuardad.idMateria == null"
+                [(ngModel)]="selectedCruso" optionLabel="nombreCurso" placeholder="Curso"></p-dropdown>
         </div>
 
     </div>

@@ -151,10 +151,9 @@ export class CursosComponent implements OnInit {
   }
 
   eliminarCurso(curso: CursosDTO) {
-    this.cursosList = []
     this.cursosService.eliminarCurso(curso.idCurso).subscribe(res => {
       if (res != null) {
-        /* this.listarTodos() */
+        this.listarCursosJornada(this.selectJornada.genero)
         this.showToast("success", "Bien", "Curso eliminado correctamente");
       }
     })
@@ -165,5 +164,6 @@ export class CursosComponent implements OnInit {
     this.selectJornada2 = new DropDown()
     this.listarCursosJornada(selectJornada.genero)
     this.selectJornada2 = selectJornada
+    
   }
 }

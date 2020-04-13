@@ -25,26 +25,38 @@ export class MateriasComponent implements OnInit {
   selectedUsr: usuarioDTO = new usuarioDTO();
   cursosList: Array<CursosDTO> = new Array<CursosDTO>();
   selectedCruso: CursosDTO = new CursosDTO()
+  jornadas: Array<DropDown> = new Array<DropDown>();
+  selectJornada: DropDown = new DropDown()
+  cursoSelected: CursosDTO = new CursosDTO();
 
+  ocultarBoton: boolean = true;
   constructor(private materiasService: MateriasService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
     private cursosService: CursosService,
     private usuariosService: UsuariosService) {
-
+    this.jornadas = [
+      { genero: 'Mañana' },
+      { genero: 'Tarde' },
+      { genero: 'Noche' },
+      { genero: 'Sabatina' }
+    ]
   }
 
   ngOnInit() {
-    this.listarMaterias()
     this.listarUsuarios()
     this.listarTodos()
   }
 
-  listarMaterias() {
-    this.materiasService.listarCursos().subscribe(res => {
+  listarMateriasCurso(idCurso: number) {
+    this.materias = [];
+    this.materiasService.listarMateriasCurso(idCurso).subscribe(res => {
       console.log(res)
       this.materias = res
-    })
+    },
+      error => {
+        this.showToast("error", "", error.error.message);
+      })
   }
 
   showDialog() {
@@ -59,6 +71,20 @@ export class MateriasComponent implements OnInit {
       }
     })
   }
+
+  listarCursosJornada(jornada: string) {
+    this.cursosList = []
+    this.cursosService.listarCursosJornada(jornada).subscribe(res => {
+      if (res != null) {
+        console.log(res)
+        this.cursosList = res;
+      }
+    },
+      error => {
+        this.showToast("error", "", error.error.message);
+      })
+  }
+
 
   listarTodos() {
     this.cursosService.listarCursos().subscribe(res => {
@@ -100,14 +126,45 @@ export class MateriasComponent implements OnInit {
 
     this.materiasGuardad.profesor = this.selectedUsr
     this.materiasGuardad.idCurso = this.selectedCruso
+
+    if (this.materiasGuardad.idMateria != 0) {
+      this.materiasGuardad.idMateria = this.materiasGuardad.idMateria
+    } else {
+      this.materiasGuardad.idMateria = 0
+    }
     console.log(this.materiasGuardad)
     if (this.comprobarParametros() == true) {
       this.materiasService.guardarMateria(this.materiasGuardad).subscribe(res => {
-        console.log(res)
-        this.listarMaterias()
+        if (res != null) {
+          console.log(res)
+          this.display = false;
+          this.listarMateriasCurso(this.cursoSelected.idCurso);
+          this.showToast("success", "Bien", "Materia guardad correctamente");
+        }
+        //this.listarMaterias()
       })
     }
-
   }
 
+  buscarCursos(selectJornada: DropDown) {
+    this.cursosList = []
+    this.ocultarBoton = true;
+    this.cursoSelected = new CursosDTO();
+    this.materias = []
+    this.listarCursosJornada(selectJornada.genero)
+  }
+
+  buscarMaterias(curso: CursosDTO) {
+    this.ocultarBoton = false;
+    this.listarMateriasCurso(curso.idCurso)
+    this.selectedCruso = curso
+  }
+
+  editar(materia: MateriaDTO) {
+    console.log(materia)
+    this.display = true
+    this.materiasGuardad = materia;
+    this.selectedUsr= materia.profesor
+    this.selectedUsr.nombreCompleto = materia.responsable
+  }
 }

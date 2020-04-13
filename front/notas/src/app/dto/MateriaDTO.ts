@@ -8,4 +8,5 @@ export class MateriaDTO {
     public abreviatura: string;
     public profesor: usuarioDTO;
     public idCurso: CursosDTO;
+    public responsable:string;
 }

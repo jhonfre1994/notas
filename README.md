@@ -1,4 +1,4 @@
-# Mi tienda
+# Notas
 
 Aplicación para el registro de notas para estudiantes de colegio o entidades de educación superior.
 

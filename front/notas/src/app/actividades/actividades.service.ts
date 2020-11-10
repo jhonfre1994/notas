@@ -16,8 +16,8 @@ export class ActividadesService {
       .set('Content-Type', 'application/json')
   }
 
-  public actividadesPorCurso(idCurso: number): Observable<ActividadDTO[]> {
-    return this.http.get<ActividadDTO[]>(environment.gatewayServer + "api/v.1/actividad/consultarPorCurso/" + idCurso)
+  public actividadesPorMateria(idMaterial: number): Observable<ActividadDTO[]> {
+    return this.http.get<ActividadDTO[]>(environment.gatewayServer + "api/v.1/actividad/activiadesPorMateria/" + idMaterial)
   }
 
   public guardarActividad(actividad: ActividadDTO): Observable<ActividadDTO> {

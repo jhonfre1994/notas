@@ -35,9 +35,9 @@ public class ActividadController {
         this.actividadService = actividadService;
     }
 
-    @GetMapping("consultarPorCurso/{idCurso}")
-    public ResponseEntity<?> consultarPorCurso(@PathVariable("idCurso") Integer idCurso) {
-        List<ActividadDTO> res = actividadService.actividadesCurso(idCurso);
+    @GetMapping("activiadesPorMateria/{idMateria}")
+    public ResponseEntity<?> consultarPorCurso(@PathVariable("idMateria") Integer idCurso) {
+        List<ActividadDTO> res = actividadService.actividadesPorMateria(idCurso);
         return ResponseEntity.ok(res);
     }
 

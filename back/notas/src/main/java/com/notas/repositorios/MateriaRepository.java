@@ -22,7 +22,12 @@ public interface MateriaRepository extends JpaRepository<Materia, Integer> {
 
     @Query(value = "select *\n"
             + "from materia\n"
+            + "where id_curso = :id and profesor = :idProfesor", nativeQuery = true)
+    List<Materia> materiasCurso(@Param("id") Integer id, @Param("idProfesor") Integer idProfesor);
+    
+    @Query(value = "select *\n"
+            + "from materia\n"
             + "where id_curso = :id", nativeQuery = true)
-    List<Materia> materiasCurso(@Param("id") Integer id);
+    List<Materia> materiasSoloCurso(@Param("id") Integer id);
 
 }

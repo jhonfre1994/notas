@@ -48,7 +48,7 @@ public class UsuariosController {
     @GetMapping("listarEstudiantes")
 //    @PreAuthorize("hasAuthority('Profesor') or hasAuthority('Administrador')")
     public ResponseEntity<?> listarEstudiantes() {
-        List<UsrUsuarioDTO> res = usuarioService.buscarUsuarosPorRol("Estudiante");
+        List<UsrUsuarioDTO> res = usuarioService.estudianesSinCurso();
         return ResponseEntity.ok(res);
     }
 

@@ -68,9 +68,27 @@ public class MateriaServiceImpl implements MateriaService {
     }
 
     @Override
-    public List<MateriaDTO> materiasPorCurso(Integer idCurso) {
+    public List<MateriaDTO> materiasPorCurso(Integer idCurso, Integer idProfesor) {
         mapper.getConfiguration().setAmbiguityIgnored(true);
-        List<Materia> materias = materiaRepository.materiasCurso(idCurso);
+        List<Materia> materias = materiaRepository.materiasCurso(idCurso, idProfesor);
+
+        if (!materias.isEmpty()) {
+            List<MateriaDTO> res = new ArrayList<>();
+            for (Materia materia : materias) {
+                MateriaDTO item;
+                item = mapper.map(materia, MateriaDTO.class);
+                item.setResponsable(item.getProfesor().getNombres() + " " + item.getProfesor().getApellidos());
+                res.add(item);
+            }
+            return res;
+        }
+        throw new BadRequestException("No se encontraro materias relacionadas con este curso");
+    }
+
+    @Override
+    public List<MateriaDTO> materiasPorSoloCurso(Integer idCurso) {
+      mapper.getConfiguration().setAmbiguityIgnored(true);
+        List<Materia> materias = materiaRepository.materiasSoloCurso(idCurso);
 
         if (!materias.isEmpty()) {
             List<MateriaDTO> res = new ArrayList<>();

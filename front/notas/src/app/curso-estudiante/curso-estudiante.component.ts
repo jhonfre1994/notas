@@ -99,6 +99,7 @@ export class CursoEstudianteComponent implements OnInit {
           this.guardarDatos = new SaveCursoEstudiante()
           this.estudiantesPorCurso(this.cursoSelected.idCurso)
           this.usuariosSelected = []
+          this.listarUsuarios();
           this.showToast("success", "Bien", "Estudiante guardados correctamente");
 
         }
@@ -146,6 +147,7 @@ export class CursoEstudianteComponent implements OnInit {
           this.estudiantesCurso = []
           this.estudiantesPorCurso(this.cursoSelected.idCurso)
           this.showToast("success", "Bien", "Estudiante eliminado correctamente");
+          this.listarUsuarios();
         }
       })
 

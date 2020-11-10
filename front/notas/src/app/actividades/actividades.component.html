@@ -1,18 +1,22 @@
 <p-toast class="toast"></p-toast>
 <p-confirmDialog header="Confirmación" icon="pi pi-exclamation-triangle"></p-confirmDialog>
-<p-fieldset legend="Asociar estudiante">
+<p-fieldset legend="Crear Actividad">
     <div class="ui-g">
-        <div class="ui-g-12 ui-md-6 ui-lg-4">
+        <div class="ui-g-12 ui-md-6 ui-lg-3">
             <p-dropdown [style]="{width: '100%'}" [options]="cursosList" [(ngModel)]="cursoSelected"
                 optionLabel="nombreCurso" placeholder="Cursos" (onChange)="dropDownCurso($event)"></p-dropdown>
         </div>
-        <div class="ui-g-12 ui-md-6 ui-lg-4">
+        <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <p-dropdown [style]="{width: '100%'}" [options]="materias" [(ngModel)]="materiaSelected"
+                optionLabel="nombre" placeholder="Materia" (onChange)="buscarMaterias(materiaSelected)"></p-dropdown>
+        </div>
+        <div class="ui-g-12 ui-md-6 ui-lg-3">
             <span class="ui-float-label">
                 <input id="float-input" type="text" size="30" pInputText [(ngModel)]="guardarActividad.nombreActividad">
                 <label for="float-input">Nombre Actividad</label>
             </span>
         </div>
-        <div class="ui-g-12 ui-md-6 ui-lg-4">
+        <div class="ui-g-12 ui-md-6 ui-lg-3">
             <button style="width: 100%;" icon="pi pi-save" pButton type="button" label="Agregar Actividad"
                 class="ui-button-success" (click)="guardar()"></button>
         </div>
@@ -28,7 +32,7 @@
                 <!-- <th>Apellidos</th>
                 <th>Nombre usuario</th>
                 <th>Correo</th>-->
-                <th>Acciones</th> 
+                <th>Acciones</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-car>

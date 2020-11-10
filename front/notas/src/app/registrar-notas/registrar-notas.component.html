@@ -2,15 +2,19 @@
 <p-confirmDialog header="Confirmación" icon="pi pi-exclamation-triangle"></p-confirmDialog>
 <p-fieldset legend="Registrar Notas">
     <div class="ui-g">
-        <div class="ui-g-12 ui-md-6 ui-lg-4">
+        <div class="ui-g-12 ui-md-6 ui-lg-3">
             <p-dropdown [style]="{width: '100%'}" [options]="cursosList" [(ngModel)]="cursoSelected"
                 optionLabel="nombreCurso" placeholder="Cursos" (onChange)="dropDownCurso($event)"></p-dropdown>
         </div>
-        <div class="ui-g-12 ui-md-6 ui-lg-4">
+        <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <p-dropdown [style]="{width: '100%'}" [options]="materias" [(ngModel)]="materiaSelected"
+                optionLabel="nombre" placeholder="Materia" (onChange)="buscarMaterias(materiaSelected)"></p-dropdown>
+        </div>
+        <div class="ui-g-12 ui-md-6 ui-lg-3">
             <p-dropdown [style]="{width: '100%'}" [options]="actividadesList" [(ngModel)]="actividadesSelected"
                 optionLabel="nombreActividad" placeholder="Actividad"></p-dropdown>
         </div>
-        <div class="ui-g-12 ui-md-6 ui-lg-4">
+        <div class="ui-g-12 ui-md-6 ui-lg-3">
             <button style="width: 100%;" icon="pi pi-search" pButton type="button" label="Buscar"
                 class="ui-button-success" (click)="buscar()"></button>
         </div>

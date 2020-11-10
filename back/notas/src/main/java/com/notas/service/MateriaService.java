@@ -22,6 +22,8 @@ public interface MateriaService {
 
     List<MateriaDTO> listarMaterias();
 
-    List<MateriaDTO> materiasPorCurso(Integer idCurso);
+    List<MateriaDTO> materiasPorCurso(Integer idCurso, Integer idProfesor);
+
+    List<MateriaDTO> materiasPorSoloCurso(Integer idCurso);
 
 }

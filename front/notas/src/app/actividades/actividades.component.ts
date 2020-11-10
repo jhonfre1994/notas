@@ -4,12 +4,14 @@ import { CursosService } from '../cursos/cursos.service';
 import { SelectItem, MessageService, ConfirmationService } from "primeng/api";
 import { ActividadDTO } from '../dto/ActividadDTO';
 import { ActividadesService } from './actividades.service';
+import { MateriaDTO } from '../dto/MateriaDTO';
+import { MateriasService } from '../materias/materias.service';
 
 @Component({
   selector: 'app-actividades',
   templateUrl: './actividades.component.html',
   styleUrls: ['./actividades.component.css'],
-  providers: [CursosService, MessageService, ConfirmationService, ActividadesService]
+  providers: [CursosService, MessageService, ConfirmationService, ActividadesService, MateriasService]
 })
 export class ActividadesComponent implements OnInit {
 
@@ -17,15 +19,21 @@ export class ActividadesComponent implements OnInit {
   cursoSelected: CursosDTO = new CursosDTO();
   guardarActividad: ActividadDTO = new ActividadDTO();
   actividadesList: Array<ActividadDTO> = new Array<ActividadDTO>();
+  ocultarBoton: boolean = true;
+  materias: Array<MateriaDTO> = [];
+  selectedCruso: CursosDTO = new CursosDTO()
+  materiaSelected : MateriaDTO = new MateriaDTO();
+  usuario: any;
 
   constructor(private cursosService: CursosService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
-    private actividadesService: ActividadesService) { }
+    private actividadesService: ActividadesService,
+    private materiasService: MateriasService) { }
 
   ngOnInit() {
-    let usr = JSON.parse(sessionStorage.getItem("usuario"))
-    this.listarCursos(usr.idUsuario)
+    this.usuario = JSON.parse(sessionStorage.getItem("usuario"))
+    this.listarCursos(this.usuario.idUsuario)
   }
 
   public showToast(tipo: string, resumen: string, detalle: string): void {
@@ -46,8 +54,8 @@ export class ActividadesComponent implements OnInit {
   }
 
   public comprobarParametros(): boolean {
-    if (this.guardarActividad.idCurso.idCurso == null) {
-      this.showToast("error", "Error de Atributos", "Debe seleccionar un curso");
+    if (this.guardarActividad.idMateria == null) {
+      this.showToast("error", "Error de Atributos", "Debe seleccionar una materia");
       return false;
     }
     if (this.guardarActividad.nombreActividad == null) {
@@ -58,11 +66,11 @@ export class ActividadesComponent implements OnInit {
   }
 
   guardar() {
-    this.guardarActividad.idCurso = this.cursoSelected
+    this.guardarActividad.idMateria = this.materiaSelected
     if (this.comprobarParametros() == true) {
       this.actividadesService.guardarActividad(this.guardarActividad).subscribe(res => {
         if (res != null) {
-          this.actividadesPorCurso(this.cursoSelected.idCurso)
+          this.actividadesPorMateria(this.materiaSelected.idMateria)
           this.limpiarDatos()
         }
       })
@@ -74,12 +82,13 @@ export class ActividadesComponent implements OnInit {
   }
 
   dropDownCurso($event) {
-    this.actividadesPorCurso($event.value.idCurso)
+    this.listarMateriasCurso($event.value.idCurso);
+    //this.actividadesPorCurso($event.value.idCurso)
   }
 
-  actividadesPorCurso(idCurso: number) {
-    this.actividadesList =[]
-    this.actividadesService.actividadesPorCurso(idCurso).subscribe(res => {
+  actividadesPorMateria(idCurso: number) {
+    this.actividadesList = []
+    this.actividadesService.actividadesPorMateria(idCurso).subscribe(res => {
       if (res != null) {
         this.actividadesList = res
       }
@@ -103,9 +112,26 @@ export class ActividadesComponent implements OnInit {
       subscribe(res => {
         if (res != null) {
           this.actividadesList = []
-          this.actividadesPorCurso(this.cursoSelected.idCurso)
+          this.actividadesPorMateria(this.materiaSelected.idMateria)
         }
       })
 
+  }
+
+  listarMateriasCurso(idCurso: number) {
+    this.materias = [];
+    this.materiasService.listarMateriasCurso(idCurso, this.usuario.idUsuario).subscribe(res => {
+      console.log(res)
+      this.materias = res
+    },
+      error => {
+        this.showToast("error", "", error.error.message);
+      })
+  }
+
+  buscarMaterias(materia: MateriaDTO) {
+    this.ocultarBoton = false;
+    this.actividadesPorMateria(materia.idMateria)
+    this.materiaSelected = materia
   }
 }

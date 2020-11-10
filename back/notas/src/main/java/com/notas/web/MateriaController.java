@@ -41,15 +41,22 @@ public class MateriaController {
         return ResponseEntity.ok(res);
     }
     
-    @GetMapping("listarMateriasCruso/{idCurso}")
-    public ResponseEntity<?> listarMateriasCruso(@PathVariable("idCurso")Integer idCurso) {
-        List<MateriaDTO> res = materiaService.materiasPorCurso(idCurso);
+    @GetMapping("listarMateriasCruso/{idCurso}/{idProfesor}")
+    public ResponseEntity<?> listarMateriasCruso(@PathVariable("idCurso")Integer idCurso, 
+            @PathVariable("idProfesor")Integer idProfesor) {
+        List<MateriaDTO> res = materiaService.materiasPorCurso(idCurso, idProfesor);
         return ResponseEntity.ok(res);
     }
 
     @PostMapping()
     public ResponseEntity<?> guardarMateria(@RequestBody MateriaDTO materia) {
         MateriaDTO res = materiaService.guardarMateria(materia);
+        return ResponseEntity.ok(res);
+    }
+    
+    @GetMapping("listarMateriasCruso/{idCurso}")
+    public ResponseEntity<?> listarMateriasDelCurso(@PathVariable("idCurso")Integer idCurso) {
+        List<MateriaDTO> res = materiaService.materiasPorSoloCurso(idCurso);
         return ResponseEntity.ok(res);
     }
 }

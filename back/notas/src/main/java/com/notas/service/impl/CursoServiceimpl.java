@@ -90,7 +90,7 @@ public class CursoServiceimpl implements CursoService {
 
         UsrUsuarioDTO usr = usrUsuarioServiceimpl.consultarUsuario(idProfesor);
         if (usr != null) {
-            List<Curso> listCursos = cursoRepository.findByIdProfesor(mapper.map(usr, UsrUsuario.class));
+            List<Curso> listCursos = cursoRepository.listaCusrsosPorProfesor(idProfesor);
             List<CursoDTO> res = new ArrayList<CursoDTO>();
             if (!listCursos.isEmpty()) {
                 for (Curso listCurso : listCursos) {

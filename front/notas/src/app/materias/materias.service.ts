@@ -24,7 +24,11 @@ export class MateriasService {
     return this.http.post<MateriaDTO>(environment.gatewayServer + "api/v.1/materias", materia, this.header)
   }
 
-  public listarMateriasCurso(idCurso:number): Observable<MateriaDTO[]> {
+  public listarMateriasCurso(idCurso:number, idprofesor:number): Observable<MateriaDTO[]> {
+    return this.http.get<MateriaDTO[]>(environment.gatewayServer + "api/v.1/materias/listarMateriasCruso/"+idCurso+ "/" + idprofesor)
+  }
+
+  public listarMateriasSoloCurso(idCurso:number): Observable<MateriaDTO[]> {
     return this.http.get<MateriaDTO[]>(environment.gatewayServer + "api/v.1/materias/listarMateriasCruso/"+idCurso)
   }
 

@@ -50,7 +50,7 @@ export class MateriasComponent implements OnInit {
 
   listarMateriasCurso(idCurso: number) {
     this.materias = [];
-    this.materiasService.listarMateriasCurso(idCurso).subscribe(res => {
+    this.materiasService.listarMateriasSoloCurso(idCurso).subscribe(res => {
       console.log(res)
       this.materias = res
     },

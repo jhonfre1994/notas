@@ -24,6 +24,7 @@ public class CursoDTO {
     private String codigo;
     private UsrUsuarioDTO idProfesor;
     private String responsable;
+    private String jornada;
 //    private List<CursoEstudianteDTO> cursoEstudianteList;
 //    private List<ActividadDTO> actividadList;
 }

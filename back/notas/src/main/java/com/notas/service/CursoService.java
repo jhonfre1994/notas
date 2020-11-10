@@ -13,14 +13,17 @@ import java.util.List;
  * @author UTP
  */
 public interface CursoService {
-    
+
     CursoDTO consultarCurso(Integer id);
-    
+
     CursoDTO guardarCruso(CursoDTO curso);
-    
+
     CursoDTO eliminarCrusto(Integer id);
-    
+
     List<CursoDTO> listarCursos();
-    
+
     List<CursoDTO> listarMisCursos(Integer idProfesor);
+
+    List<CursoDTO> cursosPorJornada(String jornada);
+
 }

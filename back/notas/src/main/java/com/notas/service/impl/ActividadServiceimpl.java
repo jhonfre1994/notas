@@ -8,7 +8,6 @@ package com.notas.service.impl;
 import com.notas.dto.ActividadDTO;
 import com.notas.entidades.Actividad;
 import com.notas.exceptions.responses.BadRequestException;
-import com.notas.exceptions.responses.NoContentException;
 import com.notas.exceptions.responses.NotFoundException;
 import com.notas.repositorios.ActividadRepository;
 import com.notas.service.ActividadService;
@@ -45,8 +44,8 @@ public class ActividadServiceimpl implements ActividadService{
     @Override
     public ActividadDTO crearActividad(ActividadDTO actividad) {
         Actividad res;
-        if(actividad.getIdCurso() == null || actividad.getIdCurso().getIdCurso() == null){
-            throw new BadRequestException("El campo nota no puede estar vacio");
+        if(actividad.getIdMateria()== null || actividad.getIdMateria().getIdMateria() == null){
+            throw new BadRequestException("Debe seleccionar una materia");
         }
         res = actividadRepository.save(mapper.map(actividad, Actividad.class));
         
@@ -65,8 +64,8 @@ public class ActividadServiceimpl implements ActividadService{
     }
 
     @Override
-    public List<ActividadDTO> actividadesCurso(Integer idCurso) {
-        List<Actividad> actividades = actividadRepository.actividadesPorCurso(idCurso);
+    public List<ActividadDTO> actividadesPorMateria(Integer idMateria) {
+        List<Actividad> actividades = actividadRepository.actividadesPorMateria(idMateria);
         List<ActividadDTO> res = new ArrayList<>();
         if(!actividades.isEmpty()){
             for (Actividad act : actividades) {

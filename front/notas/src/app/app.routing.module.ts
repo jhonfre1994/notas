@@ -11,6 +11,7 @@ import { AuthService } from './guard/auth.service';
 import { ReporteEstudianteComponent } from './reporte-estudiante/reporte-estudiante.component';
 import { NotaEstudianteComponent } from './nota-estudiante/nota-estudiante.component';
 import { RoleGuardService } from './guard/role-guard.service';
+import { MateriasComponent } from './materias/materias.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -71,6 +72,13 @@ const routes: Routes = [
           expectedRole: ["Estudiante"]
         }
       },
+      {
+        path: 'materias', component: MateriasComponent,
+        canActivate: [RoleGuardService],
+        data: {
+          expectedRole: ["Profesor", "Administrativo"]
+        }
+      }
 
 
 

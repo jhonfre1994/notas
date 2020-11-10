@@ -30,5 +30,7 @@ public interface UsrUsuarioService {
 
     List<UsrUsuarioDTO> buscarUsuarosPorRol(String role);
     
+    List<UsrUsuarioDTO> estudianesSinCurso();
+    
 
 }

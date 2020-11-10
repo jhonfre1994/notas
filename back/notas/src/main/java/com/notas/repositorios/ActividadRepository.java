@@ -21,7 +21,6 @@ public interface ActividadRepository extends JpaRepository<Actividad, Integer> {
 
     @Query(value = "select *\n"
             + "from actividad a\n"
-            + "where a.id_curso = :id", nativeQuery = true)
-    List<Actividad> actividadesPorCurso(@Param("id") Integer id);
-
+            + "where a.id_materia = :id", nativeQuery = true)
+    List<Actividad> actividadesPorMateria(@Param("id") Integer id);
 }

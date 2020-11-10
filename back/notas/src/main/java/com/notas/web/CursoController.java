@@ -54,6 +54,15 @@ public class CursoController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("cursosJornada/{jornada}")
+    public ResponseEntity<?> cursosJornada(@PathVariable("jornada") String jornada) {
+        List<CursoDTO> res = cursoService.cursosPorJornada(jornada);
+        if (res != null) {
+            return ResponseEntity.ok(res);
+        }
+        return ResponseEntity.noContent().build();
+    }
+
     @PostMapping("guardarCruso")
     public ResponseEntity<?> guardarCruso(@RequestBody CursoDTO curso) {
         CursoDTO res = cursoService.guardarCruso(curso);

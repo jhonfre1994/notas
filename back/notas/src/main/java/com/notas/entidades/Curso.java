@@ -15,12 +15,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -45,12 +50,15 @@ public class Curso implements Serializable {
     @Size(max = 45)
     @Column(name = "codigo")
     private String codigo;
+    @Size(max = 50)
+    @Column(name = "jornada")
+    private String jornada;
     @JoinColumn(name = "id_profesor", referencedColumnName = "id_usuario")
     @ManyToOne
     private UsrUsuario idProfesor;
     @OneToMany(mappedBy = "idCurso")
-    private List<CursoEstudiante> cursoEstudianteList;
+    private List<Materia> materiaList;
     @OneToMany(mappedBy = "idCurso")
-    private List<Actividad> actividadList;
+    private List<CursoEstudiante> cursoEstudianteList;
 
 }

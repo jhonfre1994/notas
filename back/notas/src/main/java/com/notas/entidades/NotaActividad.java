@@ -6,6 +6,7 @@
 package com.notas.entidades;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -15,9 +16,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlRootElement;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -39,8 +43,9 @@ public class NotaActividad implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_nota")
     private Integer idNota;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "nota")
-    private float nota;
+    private BigDecimal nota;
     @Column(name = "fecha_digitacion")
     @Temporal(TemporalType.DATE)
     private Date fechaDigitacion;

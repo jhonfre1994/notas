@@ -21,5 +21,5 @@ public class ActividadDTO {
 
     private Integer idActividad;
     private String nombreActividad;
-    private CursoDTO idCurso;
+    private MateriaDTO idMateria;
 }

@@ -1,10 +1,21 @@
 <p-confirmDialog header="Confirmación" icon="pi pi-exclamation-triangle"></p-confirmDialog>
 <p-toast class="toast"></p-toast>
 
-<div style="padding: 25px;">
-    <button pButton type="button" label="Crear Curso" (click)="showDialog()"></button>
-</div>
 
+<div class="ui-g">
+    <div class="ui-g-12 ui-md-6 ui-lg-6">
+        <div class="ui-g-12 ui-md-6 ui-lg-6">
+            <p-dropdown [style]="{width: '100%'}" [options]="jornadas" [(ngModel)]="selectJornada" optionLabel="genero"
+                placeholder="Jornada" (onChange)="buscarCursos(selectJornada)">
+            </p-dropdown>
+        </div>
+        <div class="ui-g-12 ui-md-6 ui-lg-6">
+            <button [disabled]="mostrarBoton" pButton type="button" label="Crear Curso" (click)="showDialog()"></button>
+        </div>
+    </div>
+    <div class="ui-g-12 ui-md-6 ui-lg-6">
+    </div>
+</div>
 
 <div>
     <p-table [value]="cursosList">
@@ -23,7 +34,7 @@
                 <td (click)="editar(car)">{{car.responsable}}</td>
                 <td style="text-align: center;">
                     <button pButton type="button" icon="pi pi-trash" class="ui-button-danger"
-                    (click)="confirmar(car)"></button>
+                        (click)="confirmar(car)"></button>
                 </td>
 
             </tr>
@@ -32,7 +43,7 @@
 </div>
 
 
-<p-dialog header="Crear usuario" [(visible)]="display" [modal]="true" [style]="{width: '400px'}" [baseZIndex]="10000"
+<p-dialog header="Crear curso" [(visible)]="display" [modal]="true" [style]="{width: '400px'}" [baseZIndex]="10000"
     [draggable]="false" [resizable]="false">
     <p-toast class="toast"></p-toast>
     <div class="p-grid">
@@ -48,11 +59,14 @@
                 <label for="float-input">Código curso</label>
             </span>
         </div>
-        <div class="p-col" >
-            <span class="ui-float-label" >
-                <p-dropdown [style]="{width: '100%'}" [options]="usuariosLis" [(ngModel)]="selectedUsr" optionLabel="nombreCompleto" placeholder=" "></p-dropdown>
-                <label for="float-input">Responsable</label>
-            </span>
+        <div class="p-col">
+            <p-dropdown [style]="{width: '100%'}" [options]="usuariosLis" [(ngModel)]="selectedUsr"
+                optionLabel="nombreCompleto" placeholder="Responsable"></p-dropdown>
+        </div>
+        <div class="p-col">
+            <p-dropdown [style]="{width: '100%'}" [disabled]="guardarCurso.idCurso == null" [options]="jornadas"
+                [(ngModel)]="selectJornada2" optionLabel="genero" placeholder="Jornada">
+            </p-dropdown>
         </div>
 
     </div>

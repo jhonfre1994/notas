@@ -20,6 +20,6 @@ public interface ActividadService {
 
     ActividadDTO eliminarActividad(Integer id);
 
-    List<ActividadDTO> actividadesCurso(Integer idCurso);
+    List<ActividadDTO> actividadesPorMateria(Integer idMateria);
 
 }

@@ -90,7 +90,7 @@ public class CursoServiceimpl implements CursoService {
 
         UsrUsuarioDTO usr = usrUsuarioServiceimpl.consultarUsuario(idProfesor);
         if (usr != null) {
-            List<Curso> listCursos = cursoRepository.findByIdProfesor(mapper.map(usr, UsrUsuario.class));
+            List<Curso> listCursos = cursoRepository.listaCusrsosPorProfesor(idProfesor);
             List<CursoDTO> res = new ArrayList<CursoDTO>();
             if (!listCursos.isEmpty()) {
                 for (Curso listCurso : listCursos) {
@@ -103,6 +103,23 @@ public class CursoServiceimpl implements CursoService {
             }
         }
         throw new BadRequestException("No se encuentra en profesor en la base de datos");
+    }
+
+    @Override
+    public List<CursoDTO> cursosPorJornada(String jornada) {
+        List<Curso> cursos = cursoRepository.findByJornada(jornada);
+
+        if (!cursos.isEmpty()) {
+            List<CursoDTO> res = new ArrayList<>();
+            for (Curso curso : cursos) {
+                CursoDTO item = new CursoDTO();
+                item = mapper.map(curso, CursoDTO.class);
+                item.setResponsable(curso.getIdProfesor().getNombres() + " " + curso.getIdProfesor().getApellidos());
+                res.add(item);
+            }
+            return res;
+        }
+        throw new BadRequestException("No hay cursos en esta jornada");
     }
 
 }

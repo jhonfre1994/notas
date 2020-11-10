@@ -6,4 +6,5 @@ export class CursosDTO{
     public  codigo : string;
     public  idProfesor : usuarioDTO;
     public responsable: string
+    public jornada: string;
 }

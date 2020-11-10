@@ -59,7 +59,7 @@ public class NotaActividadServiceimpl implements NotaActividadService {
         ActividadDTO actividad = actividadServiceimpl.consultarActividad(idActividad);
         List<NotaActividadDTO> notasRes = new ArrayList<>();
         if (actividad != null) {
-            List<UsrUsuarioDTO> estudiantes = cursoEstudianteServiceimpl.listaPorCurso(actividad.getIdCurso().getIdCurso());
+            List<UsrUsuarioDTO> estudiantes = cursoEstudianteServiceimpl.listaPorCurso(actividad.getIdMateria().getIdCurso().getIdCurso());
 
             if (!estudiantes.isEmpty()) {
                 for (UsrUsuarioDTO estudiante : estudiantes) {
@@ -112,7 +112,7 @@ public class NotaActividadServiceimpl implements NotaActividadService {
 
         if (usu != null) {
 
-            List<ActividadDTO> act = actividadServiceimpl.actividadesCurso(curso);
+            List<ActividadDTO> act = actividadServiceimpl.actividadesPorMateria(curso);
 
             for (ActividadDTO a : act) {
                 NotaActividad nota = notaActividadRepository.findByIdEstudianteAndIdActividad(

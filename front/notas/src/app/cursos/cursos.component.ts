@@ -4,6 +4,7 @@ import { CursosDTO } from '../dto/CursosDTO';
 import { SelectItem, MessageService, ConfirmationService } from "primeng/api";
 import { usuarioDTO } from '../dto/usuarioDTO';
 import { UsuariosService } from '../usuarios/usuarios.service';
+import { DropDown } from '../usuarios/usuarios.component';
 
 
 @Component({
@@ -19,27 +20,48 @@ export class CursosComponent implements OnInit {
   usuariosLis: Array<usuarioDTO> = new Array<usuarioDTO>();
   display: boolean = false;
   selectedUsr: usuarioDTO = new usuarioDTO();
-
+  selectJornada: DropDown = new DropDown()
+  selectJornada2: DropDown = new DropDown()
+  jornadas: Array<DropDown> = new Array<DropDown>();
+  jornadas2: Array<DropDown> = new Array<DropDown>();
+  mostrarBoton: boolean = true;
   constructor(private cursosService: CursosService,
     private usuariosService: UsuariosService,
     private messageService: MessageService,
-    private confirmationService: ConfirmationService) { }
+    private confirmationService: ConfirmationService) {
+
+    this.jornadas = [
+      { genero: 'Mañana' },
+      { genero: 'Tarde' },
+      { genero: 'Noche' },
+      { genero: 'Sabatina' }
+    ]
+
+    this.jornadas2 = [
+      { genero: 'Mañana' },
+      { genero: 'Tarde' },
+      { genero: 'Noche' },
+      { genero: 'Sabatina' }
+    ]
+  }
 
   ngOnInit() {
-    this.listarTodos()
     this.listarUsuarios()
   }
 
-  listarTodos() {
-    this.cursosService.listarCursos().subscribe(res => {
+  listarCursosJornada(jornada: string) {
+    this.cursosList = []
+    this.cursosService.listarCursosJornada(jornada).subscribe(res => {
       if (res != null) {
+        console.log(res)
         this.cursosList = res;
+        this.mostrarBoton = false;
       }
     },
-    error =>{
-      this.showToast("error", "", error.error.message);
-
-    })
+      error => {
+        this.mostrarBoton = false;
+        this.showToast("error", "", error.error.message);
+      })
   }
 
   listarUsuarios() {
@@ -73,12 +95,17 @@ export class CursosComponent implements OnInit {
       this.showToast("error", "Error de Atributos", "El responsable no puede estar vació");
       return false;
     }
+    if (this.guardarCurso.jornada == null) {
+      this.showToast("error", "Error de Atributos", "La jornada no puede estar vaciá");
+      return false;
+    }
     return true;
   }
 
 
   guardar() {
     this.guardarCurso.idProfesor = this.selectedUsr
+    this.guardarCurso.jornada = this.selectJornada2.genero
     if (this.guardarCurso.idCurso != 0) {
       this.guardarCurso.idCurso = this.guardarCurso.idCurso
     } else {
@@ -89,7 +116,7 @@ export class CursosComponent implements OnInit {
       this.cursosService.gurdarCurso(this.guardarCurso).subscribe(res => {
         if (res != null) {
           this.display = false
-          this.listarTodos();
+          this.listarCursosJornada(this.selectJornada.genero);
           this.showToast("success", "Bien", "Curso guardado correctamente");
 
         }
@@ -107,9 +134,9 @@ export class CursosComponent implements OnInit {
   }
 
   editar(curso: CursosDTO) {
+    console.log(curso)
     this.guardarCurso = curso
     this.display = true
-
     this.selectedUsr = curso.idProfesor
     this.selectedUsr.nombreCompleto = curso.responsable
   }
@@ -124,12 +151,19 @@ export class CursosComponent implements OnInit {
   }
 
   eliminarCurso(curso: CursosDTO) {
-    this.cursosList =[]
     this.cursosService.eliminarCurso(curso.idCurso).subscribe(res => {
       if (res != null) {
-        this.listarTodos()
+        this.listarCursosJornada(this.selectJornada.genero)
         this.showToast("success", "Bien", "Curso eliminado correctamente");
       }
     })
+  }
+
+  buscarCursos(selectJornada: DropDown) {
+    console.log(selectJornada)
+    this.selectJornada2 = new DropDown()
+    this.listarCursosJornada(selectJornada.genero)
+    this.selectJornada2 = selectJornada
+    
   }
 }

@@ -22,6 +22,7 @@ import { TokenInterceptor } from './interceptors/token.interceptor';
 import { RoleGuardService } from './guard/role-guard.service';
 import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
 import { tokenNotExpired } from 'angular2-jwt';
+import { MateriasComponent } from './materias/materias.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { tokenNotExpired } from 'angular2-jwt';
     ActividadesComponent,
     RegistrarNotasComponent,
     ReporteEstudianteComponent,
-    NotaEstudianteComponent
+    NotaEstudianteComponent,
+    MateriasComponent
   ],
   imports: [
     BrowserModule,

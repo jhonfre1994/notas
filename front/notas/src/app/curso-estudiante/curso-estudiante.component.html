@@ -2,17 +2,22 @@
 <p-confirmDialog header="Confirmación" icon="pi pi-exclamation-triangle"></p-confirmDialog>
 <p-fieldset legend="Asociar estudiante">
     <div class="ui-g">
-        <div class="ui-g-12 ui-md-6 ui-lg-4">
+        <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <p-dropdown [style]="{width: '100%'}" [options]="jornadas" [(ngModel)]="selectJornada" optionLabel="genero"
+                placeholder="Jornada" (onChange)="buscarCursos(selectJornada)">
+            </p-dropdown>
+        </div>
+        <div class="ui-g-12 ui-md-6 ui-lg-3">
             <p-dropdown [style]="{width: '100%'}" [options]="cursosList" [(ngModel)]="cursoSelected"
                 optionLabel="nombreCurso" placeholder="Cursos" (onChange)="dropDownCurso($event)"></p-dropdown>
         </div>
-        <div class="ui-g-12 ui-md-6 ui-lg-4">
+        <div class="ui-g-12 ui-md-6 ui-lg-3">
             <p-multiSelect [style]="{width: '100%'}" [options]="usuariosList" [(ngModel)]="usuariosSelected"
                 optionLabel="nombreCompleto" [defaultLabel]="'Estudiantes'"></p-multiSelect>
         </div>
-        <div class="ui-g-12 ui-md-6 ui-lg-4">
-            <button style="width: 100%;" icon="pi pi-save" pButton type="button"
-                label="Asignar estudiantes" class="ui-button-success" (click)="guardar()"></button>
+        <div class="ui-g-12 ui-md-6 ui-lg-3">
+            <button style="width: 100%;" icon="pi pi-save" pButton type="button" label="Asignar estudiantes"
+                class="ui-button-success" (click)="guardar()"></button>
         </div>
     </div>
 </p-fieldset>

@@ -7,6 +7,7 @@ package com.notas.service.impl;
 
 import com.notas.dto.UsrRolDTO;
 import com.notas.dto.UsrUsuarioDTO;
+import com.notas.dto.UsrUsuarioRolDTO;
 import com.notas.dto.UsuarioSaveDTO;
 import com.notas.dto.login;
 import com.notas.entidades.UsrRol;
@@ -33,23 +34,22 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UsrUsuarioServiceimpl implements UsrUsuarioService {
-
+    
     @Autowired
     private UsrUsuarioRepository usuarioRepository;
-
+    
     @Autowired
     private ModelMapper mapper;
-
+    
     @Autowired
     private UsrUsuarioRolImlp usrUsuarioRolImlp;
-
+    
     @Autowired
     private UsrRolImpl usrRolImpl;
-
+    
     @Autowired
     private UsrUsuarioRolRepository usrUsuarioRolRepository;
-
-
+    
     @Override
     public UsuarioSaveDTO guardarUsuario(UsuarioSaveDTO usuario) {
         mapper.getConfiguration().setAmbiguityIgnored(true);
@@ -66,7 +66,7 @@ public class UsrUsuarioServiceimpl implements UsrUsuarioService {
             } else {
                 usuario.getUsuario().setContrasena(new BCryptPasswordEncoder().encode(usuario.getUsuario().getContrasena()));
             }
-
+            
             usuAux = usuarioRepository.save(mapper.map(usuario.getUsuario(), UsrUsuario.class));
             if (!usuario.getRoles().isEmpty()) {
                 List<UsrRolDTO> roles = usrUsuarioRolImlp.actualizarRoles(usuario.getRoles(), mapper.map(usuAux, UsrUsuarioDTO.class));
@@ -79,12 +79,12 @@ public class UsrUsuarioServiceimpl implements UsrUsuarioService {
         }
         return null;
     }
-
+    
     @Override
     public UsrUsuarioDTO consultarUsuario(Integer id) {
         UsrUsuarioDTO res;
         Optional<UsrUsuario> usuario = usuarioRepository.findById(id);
-
+        
         if (usuario.isPresent()) {
             res = mapper.map(usuario.get(), UsrUsuarioDTO.class);
             res.setRoles(usrUsuarioRolImlp.rolesUsuario(res));
@@ -92,7 +92,7 @@ public class UsrUsuarioServiceimpl implements UsrUsuarioService {
         }
         return null;
     }
-
+    
     @Override
     public UsrUsuarioDTO consultarNombreUsuario(String usuario) {
         UsrUsuarioDTO res;
@@ -104,17 +104,22 @@ public class UsrUsuarioServiceimpl implements UsrUsuarioService {
         }
         return null;
     }
-
+    
     @Override
     public UsrUsuarioDTO eliminarUsuario(Integer id) {
         UsrUsuarioDTO usu = consultarUsuario(id);
         if (usu != null) {
-            usuarioRepository.deleteById(id);
-            return usu;
+            List<UsrUsuarioRol> lista = usrUsuarioRolRepository.listarRoles(id);
+            if (lista != null && !lista.isEmpty()) {
+                usrUsuarioRolRepository.deleteInBatch(lista);
+                usuarioRepository.deleteById(id);
+                return usu;
+            }
+            
         }
         return null;
     }
-
+    
     @Override
     public UsrUsuarioDTO iniciarSesion(login login) {
 //
@@ -133,7 +138,7 @@ public class UsrUsuarioServiceimpl implements UsrUsuarioService {
 //        }
         throw new NotFoundException("Usuario y/o contraseña incorrectos");
     }
-
+    
     @Override
     public List<UsrUsuarioDTO> listarTodos() {
         List<UsrUsuario> usus = usuarioRepository.findAll();
@@ -150,7 +155,7 @@ public class UsrUsuarioServiceimpl implements UsrUsuarioService {
         }
         throw new NoContentException("No existen usuarios en la base de datos");
     }
-
+    
     @Override
     public List<UsrUsuarioDTO> buscarUsuarosPorRol(String role) {
         List<UsrUsuarioDTO> res = new ArrayList<>();
@@ -169,15 +174,15 @@ public class UsrUsuarioServiceimpl implements UsrUsuarioService {
         }
         throw new NoContentException("No existen profesores en la base de datos, por favor cree uno");
     }
-
+    
     @Override
     public List<UsrUsuarioDTO> estudianesSinCurso() {
         List<UsrUsuarioDTO> res = new ArrayList<>();
         List<UsrUsuario> usuarios = usuarioRepository.estudianteSinCurso();
         if (usuarios != null && !usuarios.isEmpty()) {
             for (UsrUsuario usuario : usuarios) {
-                UsrUsuarioDTO item= new UsrUsuarioDTO();
-                item =mapper.map(usuario, UsrUsuarioDTO.class);
+                UsrUsuarioDTO item = new UsrUsuarioDTO();
+                item = mapper.map(usuario, UsrUsuarioDTO.class);
                 item.setNombreCompleto(item.getNombres() + " " + item.getApellidos());
                 res.add(item);
             }
@@ -185,6 +190,5 @@ public class UsrUsuarioServiceimpl implements UsrUsuarioService {
         }
         throw new NoContentException("No existen estudiantes en la base de datos, por favor cree uno");
     }
-
-
+    
 }
